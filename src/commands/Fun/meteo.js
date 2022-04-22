@@ -1,5 +1,11 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
+const {
+    SlashCommandBuilder
+} = require('@discordjs/builders');
+const {
+    MessageEmbed,
+    MessageActionRow,
+    MessageButton
+} = require('discord.js')
 const axios = require('axios');
 const botConfig = require('../../../cfg.json')
 const NodeGeocoder = require('node-geocoder');
@@ -21,13 +27,19 @@ module.exports = {
         let msgmember = interaction.member
         geocoder.geocode(`${city}`, (err, res) => {
             if (err) throw err;
-            if (!res[0]) return interaction.reply({ content: `Erreur ! Je n'ai pas pu trouver cette ville... (\`${city}\`) Désolé :(`, ephemeral: true })
+            if (!res[0]) return interaction.reply({
+                content: `Erreur ! Je n'ai pas pu trouver cette ville... (\`${city}\`) Désolé :(`,
+                ephemeral: true
+            })
             lati = res[0].latitude
             long = res[0].longitude
             axios.get(`https://api.openweathermap.org/data/2.5/onecall?appid=${botConfig.wAPIKey}&lat=${lati}&lon=${long}&exclude=hourly,daily&lang=fr&units=metric`)
                 .then(response => {
                     const apiResponse = response.data;
-                    if (apiResponse.error) return interaction.reply({ content: `Erreur : ${apiResponse.error.info}`, ephemeral: true });
+                    if (apiResponse.error) return interaction.reply({
+                        content: `Erreur : ${apiResponse.error.info}`,
+                        ephemeral: true
+                    });
                     let rain;
                     if (apiResponse.current.rain) {
                         rain = apiResponse.current.rain['1h']
@@ -49,9 +61,14 @@ module.exports = {
                         .addField(apiResponse.alerts ? "Alerte(s) dans la zone :" : "Aucune alerte(s) n'est à signaler.", apiResponse.alerts ? `Il y a une/des alerte(s) pour \`${apiResponse.alerts.map(o => o.event).join(', ')}\` dans votre zone !\nCliquez sur : 'Plus de détails' pour voir les détails.` : "Pas d'alerte(s) récente(s).")
                         .setTimestamp()
                         .setFooter('Made by Lack', 'https://i.imgur.com/JLhTSlQ.png');
-                    interaction.reply({ content: 'Voici la météo :', ephemeral: true });
+                    interaction.reply({
+                        content: 'Voici la météo :',
+                        ephemeral: true
+                    });
                     let channel = interaction.channel
-                    channel.send({ embeds: [meteoEmbed] })
+                    channel.send({
+                            embeds: [meteoEmbed]
+                        })
                         .then(message => {
                             if (apiResponse.alerts) {
                                 const row = new MessageActionRow()
@@ -61,9 +78,14 @@ module.exports = {
                                         .setLabel('Plus de détails')
                                         .setStyle('SECONDARY')
                                     );
-                                message.edit({ components: [row] });
+                                message.edit({
+                                    components: [row]
+                                });
                                 const filter = i => i.customId === 'primary' && i.user.id === msgmember.id;
-                                const collector = message.channel.createMessageComponentCollector({ filter, time: 10000 })
+                                const collector = message.channel.createMessageComponentCollector({
+                                    filter,
+                                    time: 10000
+                                })
                                 collector.on('collect', async(btn) => {
                                     if (btn.customId === 'primary') {
                                         const rows = apiResponse.alerts
@@ -76,8 +98,14 @@ module.exports = {
                                                     .setFooter(`Page : ${starting+1}/${rows.length}`)
                                                 return embed
                                             } // ['⏪', '⬅️', '➡️', '⏩', '🗑️']
-                                        await btn.update({ content: '*Getting informations...*', components: [], embeds: [] })
-                                        message.channel.send({ embeds: [generateEmbed(0)] }).then(message => {
+                                        await btn.update({
+                                            content: '*Getting informations...*',
+                                            components: [],
+                                            embeds: []
+                                        })
+                                        message.channel.send({
+                                            embeds: [generateEmbed(0)]
+                                        }).then(message => {
                                             if (rows.length <= 1) return
                                             let btn_droite = new MessageButton()
                                                 .setCustomId('btn_droite')
@@ -119,9 +147,14 @@ module.exports = {
                                                     btn_deb,
                                                     btn_trash
                                                 )
-                                            message.edit({ components: [row1] })
+                                            message.edit({
+                                                components: [row1]
+                                            })
                                             let filter2 = i => i.customId === 'btn_droite' || i.customId === 'btn_fin' || i.customId === 'btn_gauche' || i.customId === 'btn_deb' || i.customId === 'btn_trash' && i.user.id === msgmember.id;
-                                            const collector2 = message.channel.createMessageComponentCollector({ filter2, time: 10000 })
+                                            const collector2 = message.channel.createMessageComponentCollector({
+                                                filter2,
+                                                time: 10000
+                                            })
                                             let currentIndex = 0
                                             let trash = false;
                                             collector2.on('collect', async(btn) => {
@@ -142,15 +175,27 @@ module.exports = {
                                                 }
                                                 if (currentIndex !== 0) {
                                                     if (currentIndex + 1 == rows.length) {
-                                                        btn.update({ components: [row3], embeds: [generateEmbed(currentIndex)] })
+                                                        btn.update({
+                                                            components: [row3],
+                                                            embeds: [generateEmbed(currentIndex)]
+                                                        })
                                                     } else {
-                                                        btn.update({ components: [row2], embeds: [generateEmbed(currentIndex)] })
+                                                        btn.update({
+                                                            components: [row2],
+                                                            embeds: [generateEmbed(currentIndex)]
+                                                        })
                                                     }
                                                 }
-                                                if (currentIndex == 0) btn.update({ components: [row1], embeds: [generateEmbed(currentIndex)] })
+                                                if (currentIndex == 0) btn.update({
+                                                    components: [row1],
+                                                    embeds: [generateEmbed(currentIndex)]
+                                                })
                                             })
                                             collector2.on('end', () => {
-                                                if (!trash) message.edit({ components: [], embeds: [generateEmbed(currentIndex)] })
+                                                if (!trash) message.edit({
+                                                    components: [],
+                                                    embeds: [generateEmbed(currentIndex)]
+                                                })
                                             });;
                                         })
                                     }
