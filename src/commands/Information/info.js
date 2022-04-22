@@ -201,13 +201,13 @@ module.exports = {
         } else if (interaction.options.getSubcommand() === "client") {
             const core = os.cpus()[0];
             const clientInfoEmbed = new MessageEmbed()
-                .setThumbnail(interaction.client.user.avatarURL({ format: 'jpg', dynamic: true, size: 256 }))
+                .setThumbnail(interaction.client.user.avatarURL({ format: 'png', dynamic: true, size: 256 }))
                 .setColor(interaction.guild.me.displayHexColor || 'BLUE')
                 .addField('Informations du client :',
                     `**• Client :** ${interaction.client.user.tag} (${interaction.client.user.id})
                     **• Commandes :** ${interaction.client.commands.size}
                     **• Serveurs :** ${interaction.client.guilds.cache.size.toLocaleString()}
-                    **• Utilisateurs :** ${interaction.client.users.cache.reduce((a, b) => a + b.memberCount, 0).toLocaleString()}
+                    **• Utilisateurs :** ${interaction.client.users.cache.size.toLocaleString()}
                     **• Channels :** ${interaction.client.channels.cache.size.toLocaleString()}
                     **• Date de création :** <t:${Math.round(interaction.client.user.createdTimestamp/1000)}:F>
                     **• NodeJS :** ${process.version}
