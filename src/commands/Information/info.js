@@ -3,6 +3,7 @@ const { MessageEmbed, UserFlags, version: djsversion } = require('discord.js')
 const { version } = require('../../../package.json');
 const os = require('os');
 const ms = require('ms');
+const { serialize } = require('v8');
 
 const flags = {
     DISCORD_EMPLOYEE: 'Discord Employee',
@@ -18,6 +19,37 @@ const flags = {
     SYSTEM: 'System',
     VERIFIED_BOT: 'Verified Bot',
     EARLY_VERIFIED_BOT_DEVELOPER: 'Early Verified Bot Developer'
+};
+
+const permissions = {
+    ADMINISTRATOR: 'Administrator',
+    VIEW_AUDIT_LOG: 'View audit log',
+    MANAGE_GUILD: 'Manage server',
+    MANAGE_ROLES: 'Manage roles',
+    MANAGE_CHANNELS: 'Manage channels',
+    KICK_MEMBERS: 'Kick members',
+    BAN_MEMBERS: 'Ban members',
+    CREATE_INSTANT_INVITE: 'Create instant invite',
+    CHANGE_NICKNAME: 'Change nickname',
+    MANAGE_NICKNAMES: 'Manage nicknames',
+    MANAGE_EMOJIS: 'Manage emojis',
+    MANAGE_WEBHOOKS: 'Manage webhooks',
+    VIEW_CHANNEL: 'Read text channels and see voice channels',
+    SEND_MESSAGES: 'Send messages',
+    SEND_TTS_MESSAGES: 'Send TTS messages',
+    MANAGE_MESSAGES: 'Manage messages',
+    EMBED_LINKS: 'Embed links',
+    ATTACH_FILES: 'Attach files',
+    READ_MESSAGE_HISTORY: 'Read message history',
+    MENTION_EVERYONE: 'Mention everyone',
+    USE_EXTERNAL_EMOJIS: 'Use external emojis',
+    ADD_REACTIONS: 'Add reactions',
+    CONNECT: 'Connect',
+    SPEAK: 'Speak',
+    MUTE_MEMBERS: 'Mute members',
+    DEAFEN_MEMBERS: 'Deafen members',
+    MOVE_MEMBERS: 'Move members',
+    USE_VAD: 'Use voice activity'
 };
 
 const filterLevels = {
@@ -51,6 +83,12 @@ module.exports = {
             subcommand
             .setName('client')
             .setDescription("Informations sur le bot")
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('role')
+            .setDescription("Informations sur un role")
+            .addRoleOption(option => option.setName("target").setDescription("Le role sélectionné").setRequired(true))
         ),
 
     async execute(interaction) {
@@ -224,10 +262,33 @@ module.exports = {
                     \u3000 Vitesse : ${core.speed}MHz
                     **• Mémoire :**
                     \u3000 Total : ${interaction.client.formatBytes(process.memoryUsage().heapTotal)}
-                    \u3000 User : ${interaction.client.formatBytes(process.memoryUsage().heapUsed)}`)
+                    \u3000 Used : ${interaction.client.formatBytes(process.memoryUsage().heapUsed)}`)
                 .setTimestamp()
                 .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'});
             interaction.reply({ embeds: [clientInfoEmbed] });      
+        } else if (interaction.options.getSubcommand() === "role") {
+            const role = interaction.options.getRole('target');
+
+            const serialized = role.permissionsIn(interaction.channel).serialize();
+            const perms = Object.keys(permissions).filter(perm => serialized[perm]);
+
+            const roleInfoEmbed = new MessageEmbed()
+                .setColor(role.hexColor || 'BLUE')
+                .setTitle(`Informations du role : ${role.name}`)
+                .setThumbnail(role.guild.iconURL({ format: 'png', dynamic: true, size: 256 }))
+                .addField('Informations :',
+                    `**• ID : ${role.id}**
+                    **• Couleur : ${role.hexColor ? `#${role.hexColor.toUpperCase()}` : 'None'}**
+                    **• Date de création : <t:${Math.round(role.createdTimestamp/1000)}:F>**
+                    **• Mentionnable : ${role.mentionable ? 'Oui' : 'Non'}**
+                    **• Visible (à part) : ${role.hoist ? 'Oui' : 'Non'}**
+                    **• Nombre de membres : ${role.members.size}**
+                    **• Permissions : \`${perms.map(perm => permissions[perm]).join(', ') || 'Aucune'}\`**
+                    \u200b`
+                )
+                .setTimestamp()
+                .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'});
+            interaction.reply({ embeds: [roleInfoEmbed] });
         }
     },
 };
