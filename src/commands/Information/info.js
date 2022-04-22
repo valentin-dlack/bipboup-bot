@@ -1,5 +1,8 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed, UserFlags } = require('discord.js')
+const { MessageEmbed, UserFlags, version: djsversion } = require('discord.js')
+const { version } = require('../../../package.json');
+const os = require('os');
+const ms = require('ms');
 
 const flags = {
     DISCORD_EMPLOYEE: 'Discord Employee',
@@ -43,6 +46,11 @@ module.exports = {
             subcommand
             .setName('server')
             .setDescription("Information sur le serveur")
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('client')
+            .setDescription("Informations sur le bot")
         ),
 
     async execute(interaction) {
@@ -143,7 +151,7 @@ module.exports = {
                 )
                 .setImage(userAvatar)
                 .setTimestamp()
-                .setFooter('Made by Lack', 'https://i.imgur.com/JLhTSlQ.png');
+                .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'});
             interaction.reply({ embeds: [userInfoEmbed] });
         } else if (interaction.options.getSubcommand() === "server") {
             const guild = interaction.guild
@@ -188,8 +196,38 @@ module.exports = {
                 )
                 .addField(`Roles [${roles.length - 1}]`, roles.length < 10 ? roles.join(', ') : roles.length > 10 ? guild.client.trimArray(roles).join(', ') : 'None')
                 .setTimestamp()
-                .setFooter('Made by Lack', 'https://i.imgur.com/JLhTSlQ.png');
+                .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'});
             interaction.reply({ embeds: [serverInfoEmbed] });
+        } else if (interaction.options.getSubcommand() === "client") {
+            const core = os.cpus()[0];
+            const clientInfoEmbed = new MessageEmbed()
+                .setThumbnail(interaction.client.user.avatarURL({ format: 'jpg', dynamic: true, size: 256 }))
+                .setColor(interaction.guild.me.displayHexColor || 'BLUE')
+                .addField('Informations du client :',
+                    `**• Client :** ${interaction.client.user.tag} (${interaction.client.user.id})
+                    **• Commandes :** ${interaction.client.commands.size}
+                    **• Serveurs :** ${interaction.client.guilds.cache.size.toLocaleString()}
+                    **• Utilisateurs :** ${interaction.client.users.cache.reduce((a, b) => a + b.memberCount, 0).toLocaleString()}
+                    **• Channels :** ${interaction.client.channels.cache.size.toLocaleString()}
+                    **• Date de création :** <t:${Math.round(interaction.client.user.createdTimestamp/1000)}:F>
+                    **• NodeJS :** ${process.version}
+                    **• Version : ** v${version}
+                    **• discord.js :** ${djsversion}
+                    **• Développeur :** Lack_off1
+                    \u200b`)
+                    .addField('Informations système :',
+                    `**• Platforme :** ${process.platform}
+                    **• Uptime :** ${ms(os.uptime() * 1000, { long: true })}
+                    **• CPU :**
+                    \u3000 Coeurs : ${os.cpus().length}
+                    \u3000 Modèle : ${core.model}
+                    \u3000 Vitesse : ${core.speed}MHz
+                    **• Mémoire :**
+                    \u3000 Total : ${interaction.client.formatBytes(process.memoryUsage().heapTotal)}
+                    \u3000 User : ${interaction.client.formatBytes(process.memoryUsage().heapUsed)}`)
+                .setTimestamp()
+                .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'});
+            interaction.reply({ embeds: [clientInfoEmbed] });      
         }
     },
 };
