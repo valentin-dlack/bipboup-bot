@@ -36,7 +36,8 @@ module.exports = {
             if (error.status === 404) {
                 return interaction.reply(`Le pays ${country} n'existe pas`);
             }
-            return interaction.reply(`Une erreur est survenue : ${error}`);
+            interaction.client.errorSend(interaction, error);
+            return interaction.reply(`Une erreur est survenue, le staff a été prévenu ! :(`);
         }
     }
 }

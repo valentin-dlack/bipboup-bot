@@ -197,7 +197,7 @@ module.exports = {
             const roles = guild.roles.cache.sort((a, b) => b.position - a.position).map(role => role.toString());
             const emojis = guild.emojis.cache
             const channels = guild.channels.cache
-            let guildAvatar = guild.iconURL({ format: 'jpg', dynamic: true, size: 256 })
+            let guildAvatar = guild.iconURL({ format: 'png', dynamic: true, size: 256 })
             let partnerState = "Non"
             let onlineMembers = guild.members.cache.filter(m => m.presence && m.presence.status !== 'offline').size;
             let premiumLvl = guild.premiumTier

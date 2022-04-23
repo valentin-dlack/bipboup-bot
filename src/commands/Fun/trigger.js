@@ -42,7 +42,8 @@ module.exports = {
             const buffer = await interaction.client.streamToArray(stream);
             return interaction.reply({ content:'Triggered !', files: [{ attachment: Buffer.concat(buffer), name: 'trigger.gif' }] });
         } catch (error) {
-            return interaction.reply(`Une erreur est survenue : ${error}`);
+            interaction.client.errorSend(interaction, error);
+            return interaction.reply(`Une erreur est survenue, le staff a été prévenu ! :(`);
         }
     }
 }
