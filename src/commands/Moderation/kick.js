@@ -1,25 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-
-const channel_names = [
-    'logs',
-    'logs-modération',
-    'mods-logs',
-    'logs-staff',
-    'logs-staff-modération',
-    'moderator-logs',
-    "command-logs",
-    "command-moderation",
-    'bot',
-    'bot-logs',
-    'moderator-only',
-    'user-log',
-    'user-logs',
-    'mod-log',
-    'mod-logs',
-    'log-discord',
-    'mod-chat'
-]
+const channel_names = require("../../../logs_names.json");
 
 module.exports = {
     data: new SlashCommandBuilder()
