@@ -57,7 +57,7 @@ module.exports = {
                 .addField("Banni par :", `${interaction.user.username}`)
                 .addField("Raison :", `${reason}`)
                 .addField("Date du ban :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
-                .setFooter({ text: `ID du ban : #${banId}`, iconURL: interaction.user.displayAvatarURL({ format: 'png', dynamic: true, size: 256 })})
+                .setFooter({ text: `ID du ban : #${banId}`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 })})
     
             let banEmbed = new MessageEmbed()
                 .setColor("#bc0000")
@@ -68,7 +68,7 @@ module.exports = {
                 .addField("Raison :", `${reason}`)
                 .addField("Date du ban :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
                 .addField("ID du ban :", `#${banId}`)
-                .setFooter({ text: `Ban manager`, iconURL: interaction.user.displayAvatarURL({ format: 'png', dynamic: true, size: 256 })})
+                .setFooter({ text: `Ban manager`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 })})
     
             for (let i = 0; i < channel_names.length; i++) {
                 let channel = interaction.guild.channels.cache.find(channel => channel.name === channel_names[i]);
