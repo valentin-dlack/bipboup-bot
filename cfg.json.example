@@ -1,7 +1,6 @@
  {
     "token": "XXXXXXXXXXX.XXXXXXXXXXXXXXXX.XXXXXXXXXXXXXX",
     "wAPIKey": "XXXXXXXXXXX",
-    "trackApiKey": "XXXXXXXXXXX",
     "opencageApiKey": "XXXXXXXXXXX",
     "jokeApiKey": "XXXXXXXXXXX",
     "db_secret": "password",
