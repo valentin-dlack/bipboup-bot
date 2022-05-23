@@ -1,0 +1,17 @@
+ {
+    "token": "XXXXXXXXXXX.XXXXXXXXXXXXXXXX.XXXXXXXXXXXXXX",
+    "wAPIKey": "XXXXXXXXXXX",
+    "trackApiKey": "XXXXXXXXXXX",
+    "opencageApiKey": "XXXXXXXXXXX",
+    "jokeApiKey": "XXXXXXXXXXX",
+    "db_secret": "password",
+    "db_name": "database",
+    "errorHandler" : {
+        "guildlog_id": "11111111111111111",
+        "channel_id": "11111111111111111"
+    },
+    "commandHandler" : {
+        "clientId" : "222222222222222222",
+        "guildId" : "222222222222222222"
+    }
+}
