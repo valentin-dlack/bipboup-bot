@@ -16,10 +16,10 @@ Hello this is my certified discord bot and it is cool !
 
 ## Prerequisites
 
- - [NodeJS](https://nodejs.org/en/)
- - [Discord Bot Account](https://discord.com/developers/applications)
- - Internet connection
- - MySQL database
+- [NodeJS](https://nodejs.org/en/)
+- [Discord Bot Account](https://discord.com/developers/applications)
+- Internet connection
+- MySQL database
 
 ## Config file
 
