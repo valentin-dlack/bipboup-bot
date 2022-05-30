@@ -11,7 +11,6 @@ module.exports = {
     async execute(interaction) {
         try {
             let number = interaction.options.getInteger("number");
-            let channel = interaction.channel;
     
             if (number > 100) {
                 console.log(number);

@@ -9,6 +9,7 @@
   "author": "lack_off1",
   "license": "ISC",
   "dependencies": {
+    "@anishshobith/deeptype": "^1.1.0",
     "@discordjs/builders": "^0.8.2",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@vitalets/google-translate-api": "^8.0.0",
@@ -23,6 +24,7 @@
     "node-superfetch": "^0.2.3",
     "os": "^0.1.2",
     "path": "^0.12.7",
-    "random-puppy": "^1.1.0"
+    "random-puppy": "^1.1.0",
+    "util": "^0.12.4"
   }
 }

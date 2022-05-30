@@ -1,3 +1,5 @@
+const config = require('../../cfg.json');
+
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction, client) {
@@ -19,6 +21,10 @@ module.exports = {
                 }
             }
 
+            if (command.ownerOnly && interaction.user.id !== config.ownerID) {
+                interaction.reply({ content: `Cette commande est réservée au propriétaire du bot...`, ephemeral: true });
+                return;
+            }
             await command.execute(interaction);
         } catch (error) {
             console.error(error);

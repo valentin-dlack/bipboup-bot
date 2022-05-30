@@ -1,3 +1,5 @@
+const cfg = require('../../cfg.json');
+
 module.exports = (client) => {
     client.shortenText = (ctx, text, maxWidth) => {
         let shorten = false;
@@ -67,5 +69,15 @@ module.exports = (client) => {
 
     client.formatNumber = (number, fractionDigit = 0) => {
         return Number.parseFloat(number).toLocaleString(undefined, { minimumFractionDigits: fractionDigit, maximumFractionDigits: 2 });
+    }
+
+    client.cleanTxt = (text) => {
+        if (typeof text === 'string') {
+            text = text
+                .replace(/`/g, `\`${String.fromCharCode(8203)}`)
+                .replace(/@/g, `@${String.fromCharCode(8203)}`)
+                .replace(new RegExp(cfg.token, 'gi'), '****')
+        }
+        return text
     }
 }
