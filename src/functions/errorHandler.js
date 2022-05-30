@@ -8,8 +8,9 @@ module.exports = (client) => {
         let embed = new MessageEmbed()
             .setColor('#ff0000')
             .setTitle('Erreur critique')
-            .setDescription(`Une erreur est survenue sur le serveur ${interaction.guild.cleaname} !`)
+            .setDescription(`Une erreur est survenue sur le serveur ${interaction.guild.name} !`)
             .addField('Erreur :', `\`\`\`${error}\`\`\``)
+            .addField('Error Stack :', `\`\`\`${error.stack.substring(0, 900)}...\`\`\``)
             .addField('Commande :', `\`\`\`${interaction.commandName}\`\`\``)
             .addField('Utilisateur :', `\`\`\`${interaction.user.tag}\`\`\``)
             .setTimestamp();

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
+const { Permissions, MessageEmbed } = require("discord.js");
 const channel_names = require("../../../logs_names.json");
 
 module.exports = {
@@ -7,14 +7,10 @@ module.exports = {
         .setName("unban")
         .setDescription("Unban un utilisateur")
         .addStringOption(option => option.setName("user_id").setDescription("L'id de l'utilisateur à unban").setRequired(true)),
+    permissions: [ Permissions.FLAGS.BAN_MEMBERS ],
 
     async execute(interaction) {
         let user_id = interaction.options.getString("user_id");
-
-        if (!interaction.guild.me.permissions.has("BAN_MEMBERS")) {
-            interaction.reply({ content: "Je n'ai pas la permission de faire ça !", ephemeral: true });
-            return;
-        }
 
         let BannedUser;
 

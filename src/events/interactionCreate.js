@@ -8,6 +8,17 @@ module.exports = {
         if (!command) return;
 
         try {
+
+            if (command.permissions && command.permissions.length > 0) {
+                if (!interaction.memberPermissions.has(command.permissions)) {
+                    interaction.reply({ content: `Tu n'as pas la permission d'executer cette commande...`, ephemeral: true });
+                    return;
+                } else if (!interaction.guild.me.permissions.has(command.permissions)) {
+                    interaction.reply({ content: `Je n'ai pas la permission d'executer cette commande...`, ephemeral: true });
+                    return;
+                }
+            }
+
             await command.execute(interaction);
         } catch (error) {
             console.error(error);

@@ -1,19 +1,17 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { Permissions } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("clear")
         .setDescription("Efface un nombre défini de messages")
         .addIntegerOption(option => option.setName("number").setDescription("Nombre de messages à supprimer").setRequired(true)),
+    permissions: [ Permissions.FLAGS.MANAGE_MESSAGES ],
 
     async execute(interaction) {
         try {
             let number = interaction.options.getInteger("number");
-    
-            if (!interaction.memberPermissions.has("MANAGE_MESSAGES")) {
-                interaction.reply({ content: "Vous n'avez pas la permission d'effacer des messages !", ephemeral: true });
-                return;
-            }
+            let channel = interaction.channel;
     
             if (number > 100) {
                 console.log(number);
@@ -29,7 +27,7 @@ module.exports = {
     
             interaction.reply({ content: `${number} messages ont été supprimés !`, ephemeral: true });
         } catch (error) {
-            interaction.client.errorSend(error);
+            interaction.client.errorSend(interaction, error);
             return interaction.reply(`Une erreur est survenue, le staff a été prévenu ! :(`);
         }
     }

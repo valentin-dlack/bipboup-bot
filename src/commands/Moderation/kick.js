@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, Permissions } = require("discord.js");
 const channel_names = require("../../../logs_names.json");
 
 module.exports = {
@@ -8,6 +8,7 @@ module.exports = {
         .setDescription("exclu un utilisateur")
         .addUserOption(option => option.setName("user").setDescription("L'utilisateur à exclure").setRequired(true))
         .addStringOption(option => option.setName("reason").setDescription("Raison de l'exclusion").setRequired(true)),
+    permissions: [Permissions.FLAGS.KICK_MEMBERS],
 
     async execute(interaction) {
         let user = interaction.options.getUser("user");
@@ -16,14 +17,6 @@ module.exports = {
         const targetMember = interaction.guild.members.cache.find(member => member.id === user.id);
 
         try {
-            if (!interaction.memberPermissions.has("KICK_MEMBERS")) {
-                interaction.reply({ content: "Vous n'avez pas la permission d'exclure des utilisateurs !", ephemeral: true });
-                return;
-            }
-            if (!interaction.guild.me.permissions.has("KICK_MEMBERS")) {
-                interaction.reply({ content: "Je n'ai pas la permission d'exclure des utilisateurs !", ephemeral: true });
-                return;
-            }
             if (targetMember.permissions.has("KICK_MEMBERS")) {
                 interaction.reply({ content: "Je ne peux pas exclure cet utilisateur !", ephemeral: true });
                 return;

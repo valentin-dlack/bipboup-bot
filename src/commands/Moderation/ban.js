@@ -1,5 +1,5 @@
 const { SlashCommandBuilder} = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { MessageEmbed, Permissions } = require('discord.js');
 
 const channel_names = [
     'logs',
@@ -27,6 +27,7 @@ module.exports = {
         .setDescription(`Bannir un utilisateur`)
         .addUserOption(option => option.setName('user').setDescription("L'utilisateur à bannir").setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription("Raison du ban").setRequired(true)),
+    permissions: [Permissions.FLAGS.BAN_MEMBERS],
 
     async execute(interaction) {
         let user = interaction.options.getUser('user');
@@ -35,14 +36,6 @@ module.exports = {
         const targetMember = interaction.guild.members.cache.find(member => member.id === user.id)
 
         try {
-            if (!interaction.memberPermissions.has("BAN_MEMBERS")) {
-                interaction.reply({ content: "Vous n'avez pas la permission de bannir des utilisateurs !", ephimeral: true });
-                return;
-            }
-            if (!interaction.guild.me.permissions.has("BAN_MEMBERS")) {
-                interaction.reply({ content: "Je n'ai pas la permission de bannir des utilisateurs !", ephimeral: true });
-                return;
-            }
             if (targetMember.permissions.has("BAN_MEMBERS")) {
                 interaction.reply({ content: "Je ne peux pas bannir cet utilisateur !", ephimeral: true });
                 return;
