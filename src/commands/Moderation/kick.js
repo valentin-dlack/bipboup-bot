@@ -9,6 +9,7 @@ module.exports = {
         .addUserOption(option => option.setName("user").setDescription("L'utilisateur à exclure").setRequired(true))
         .addStringOption(option => option.setName("reason").setDescription("Raison de l'exclusion").setRequired(true)),
     permissions: [Permissions.FLAGS.KICK_MEMBERS],
+    category: "Moderation",
 
     async execute(interaction) {
         let user = interaction.options.getUser("user");

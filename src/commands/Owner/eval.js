@@ -10,6 +10,7 @@ module.exports = {
         .addStringOption(option => option.setName('query').setDescription('JS à exécuter').setRequired(true)),
     permissions: [],
     ownerOnly: true,
+    category: "Owner",
 
     async execute(interaction) {
         let code = interaction.options.getString('query');

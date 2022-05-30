@@ -6,6 +6,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('meme')
         .setDescription(`Envoie un meme random trouvé sur reddit`),
+        permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         let subreddit = "memes"

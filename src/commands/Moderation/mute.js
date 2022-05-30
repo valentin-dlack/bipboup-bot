@@ -10,6 +10,7 @@ module.exports = {
         .addStringOption(option => option.setName("reason").setDescription("Raison du mute").setRequired(true))
         .addIntegerOption(option => option.setName("time").setDescription("Durée du mute (Minutes)").setRequired(true)),
     permissions: [ Permissions.FLAGS.KICK_MEMBERS ],
+    category: "Moderation",
 
     async execute(interaction) {
         let user = interaction.options.getUser("user");

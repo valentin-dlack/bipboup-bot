@@ -3,6 +3,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('bigbrain')
         .setDescription(`it's big brain time`),
+    permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         let bIndex = Math.floor((Math.random() * 6));

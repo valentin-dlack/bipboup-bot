@@ -7,6 +7,8 @@ module.exports = {
         .setName('covid')
         .setDescription(`Affiche les statistiques de COVID-19 selon le pays`)
         .addStringOption(option => option.setName('country').setDescription("Le pays à afficher").setRequired(false)),
+        permissions: [],
+        category: "Information",
 
     async execute(interaction) {
         let country = interaction.options.getString('country');

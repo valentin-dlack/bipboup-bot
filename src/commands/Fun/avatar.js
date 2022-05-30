@@ -31,6 +31,8 @@ module.exports = {
             )
             .addUserOption(option => option.setName('user').setDescription(`Choisi l'utilisateur dont tu veux voir la photo de profil`))
         ),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "pimp") {

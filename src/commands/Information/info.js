@@ -90,6 +90,9 @@ module.exports = {
             .setDescription("Informations sur un role")
             .addRoleOption(option => option.setName("target").setDescription("Le role sélectionné").setRequired(true))
         ),
+        permissions: [],
+        category: "Information",
+
 
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "user") {

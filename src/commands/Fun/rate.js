@@ -5,6 +5,8 @@ module.exports = {
         .setName('rate')
         .setDescription(`Donne une note à quelque chose ou à quelqu'un`)
         .addStringOption(option => option.setName('thing').setDescription("Quelque chose").setRequired(true)),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         let thing = interaction.options.getString('thing');

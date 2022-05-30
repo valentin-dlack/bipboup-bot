@@ -11,6 +11,8 @@ module.exports = {
         .setName('trigger')
         .setDescription(`Applique un trigger sur un avatar`)
         .addUserOption(option => option.setName('user').setDescription("L'utilisateur à qui appliquer le trigger").setRequired(false)),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         let user = interaction.options.getUser('user');

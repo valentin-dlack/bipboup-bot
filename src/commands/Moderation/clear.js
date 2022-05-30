@@ -7,6 +7,7 @@ module.exports = {
         .setDescription("Efface un nombre défini de messages")
         .addIntegerOption(option => option.setName("number").setDescription("Nombre de messages à supprimer").setRequired(true)),
     permissions: [ Permissions.FLAGS.MANAGE_MESSAGES ],
+    category: "Moderation",
 
     async execute(interaction) {
         try {

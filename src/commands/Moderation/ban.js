@@ -28,6 +28,7 @@ module.exports = {
         .addUserOption(option => option.setName('user').setDescription("L'utilisateur à bannir").setRequired(true))
         .addStringOption(option => option.setName('reason').setDescription("Raison du ban").setRequired(true)),
     permissions: [Permissions.FLAGS.BAN_MEMBERS],
+    category: "Moderation",
 
     async execute(interaction) {
         let user = interaction.options.getUser('user');

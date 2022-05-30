@@ -4,6 +4,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('flip')
         .setDescription(`Bah c'est un pile ou face`),
+    permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         let coinState = Math.random();

@@ -80,4 +80,12 @@ module.exports = (client) => {
         }
         return text
     }
+
+    client.removeDuplicates = (arr) => {
+        return [...new Set(arr)];
+    }
+
+    client.capitalize = (str) => {
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
 }

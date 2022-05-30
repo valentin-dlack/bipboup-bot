@@ -5,6 +5,8 @@ module.exports = {
         .setName('qi')
         .setDescription(`Je vous envoie votre QI ou celui de votre ami !`)
         .addUserOption(option => option.setName('user').setDescription("L'utilisateur à évaluer")),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         let user = interaction.options.getUser('user');

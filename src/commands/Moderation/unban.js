@@ -8,6 +8,7 @@ module.exports = {
         .setDescription("Unban un utilisateur")
         .addStringOption(option => option.setName("user_id").setDescription("L'id de l'utilisateur à unban").setRequired(true)),
     permissions: [ Permissions.FLAGS.BAN_MEMBERS ],
+    category: "Moderation",
 
     async execute(interaction) {
         let user_id = interaction.options.getString("user_id");

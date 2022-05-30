@@ -7,6 +7,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('joke')
         .setDescription(`Envoie une blague totalement random.`),
+    permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         fetch('https://www.blagues-api.fr/api/random?disallow=dark&disallow=limit', {

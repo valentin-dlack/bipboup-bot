@@ -6,6 +6,8 @@ module.exports = {
         .setName('clash')
         .setDescription(`Clashez un autre utilisateur (ou vous même ¯\\_(ツ)_/¯)`)
         .addUserOption(option => option.setName('user').setDescription(`L'utilisateur à clasher`)),
+    permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         let member = interaction.options.getMember('user');

@@ -28,6 +28,8 @@ module.exports = {
         .setName('8ball')
         .setDescription('Pose une question et le bot te réponds')
         .addStringOption(option => option.setName('input').setDescription('Posez la question').setRequired(true)),
+    permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         let str = interaction.options.getString('input');

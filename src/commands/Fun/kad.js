@@ -4,6 +4,8 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName('kad')
         .setDescription(`Ahahah kaded`),
+        permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         let channel = interaction.channel

@@ -8,6 +8,8 @@ module.exports = {
         .setName('achievement')
         .setDescription('Transforme votre message en achievement minecraft')
         .addStringOption(option => option.setName('input').setDescription('Message').setRequired(true)),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         let str = interaction.options.getString('input');

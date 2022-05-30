@@ -6,6 +6,8 @@ module.exports = {
         .setDescription(`Je choisi une option parmis celles que vous avez données`)
         .addStringOption(option => option.setName('choices').setDescription("Tout les choix").setRequired(true))
         .addStringOption(option => option.setName('separator').setDescription("Séparateur entre les choix (défaut : ,)").setRequired(false)),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         let choices = interaction.options.getString('choices');

@@ -5,6 +5,8 @@ module.exports = {
         .setName('roll')
         .setDescription(`Lance un dé`)
         .addIntegerOption(option => option.setName('sides').setDescription("Nombre de faces du dé").setRequired(true)),
+        permissions: [],
+        category: "Fun",
         
 
     async execute(interaction) {

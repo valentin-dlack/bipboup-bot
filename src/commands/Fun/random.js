@@ -5,7 +5,7 @@ const fetch = require('node-superfetch');
 module.exports = {
     data: new SlashCommandBuilder()
         .setName('random')
-        .setDescription(`Pong...`)
+        .setDescription(`Génère des images aléatoires.`)
         .addSubcommand(subcommand =>
             subcommand
             .setName('art')
@@ -30,6 +30,8 @@ module.exports = {
             .setName('waifu')
             .setDescription("Génère une image aléatoire de waifu")
         ),
+        permissions: [],
+        category: "Fun",
 
     async execute(interaction) {
         let imgMsg = new MessageEmbed()
