@@ -42,6 +42,7 @@ module.exports = {
                 const embed = new MessageEmbed()
                 .setColor('GREEN')
                 .setAuthor({ name: `Menu D'Aide de ${interaction.guild.name}`, iconURL : interaction.guild.iconURL({ dynamic: true })})
+                .setDescription(`Nombre de commandes : ${interaction.client.commands.size}`)
                 .setThumbnail(interaction.client.user.displayAvatarURL())
                 .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'})
                 .setThumbnail();
