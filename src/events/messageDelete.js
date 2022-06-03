@@ -35,7 +35,7 @@ module.exports = {
                     .setColor('#ff0000')
                     .setTitle('Message Logs :')
                     .addField(`Informations :`, `\`\`\`diff\n▶ Message supprimé dans : ${message.channel.name}\n▶ Ecrit par : ${message.author.tag}\n\`\`\``)
-                    .addField(`Timestamp :`, `\`\`\`${timestamp}\`\`\``)
+                    .addField(`Timestamp :`, `<t:${Math.floor(Date.now()/1000)}>`)
                     .addField(`Contenu du message :`, `\`\`\`${message.cleanContent ? message.cleanContent : "[Empty message]"}\`\`\``)
                     .addField(`Attachements :`, `${attachment ? attachment.join('\n') : "No Attachements"}`)
                     .setFooter({text : `ID du message : ${message.id}`, iconUrl : message.author.displayAvatarURL({ format: 'png' })});

@@ -38,7 +38,7 @@ module.exports = {
                     .setColor('ORANGE')
                     .setTitle('Message Logs :')
                     .addField(`Informations :`, `\`\`\`diff\n▶ Message modifié dans : ${oldMessage.channel.name}\n▶ Ecrit par : ${oldMessage.author.tag}\n\`\`\``)
-                    .addField(`Timestamp :`, `\`\`\`${timestamp}\`\`\``)
+                    .addField(`Timestamp :`, `<t:${Math.floor(Date.now()/1000)}>`)
                     .addField(`Contenu de l'ancien message :`, `\`\`\`${oldMessage.cleanContent ? oldMessage.cleanContent : "[Empty message]"}\`\`\``)
                     .addField(`Contenu du nouveau message :`, `\`\`\`${newMessage.cleanContent ? newMessage.cleanContent : "[Empty message]"}\`\`\``)
                     .addField(`Attachements de l'ancien message :`, `${attachment ? attachment.join('\n') : "No Attachements"}`)
