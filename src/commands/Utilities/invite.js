@@ -9,7 +9,7 @@ module.exports = {
     category: 'Utilitaires',
 
     async execute(interaction) {
-        let hlink = `https://discord.com/api/oauth2/authorize?client_id=${interaction.client.id}&permissions=8&scope=bot%20applications.commands`;
+        let hlink = `https://discord.com/api/oauth2/authorize?client_id=${interaction.client.user.id}&permissions=8&scope=bot%20applications.commands`;
         turl.shorten(hlink).then((res) => {
             interaction.user.send(`**Voici le lien pour m'inviter sur votre serveur ! Je suis content que vous me fassiez confiance** 😃\n<${res}>`);
         }).catch((err) => {

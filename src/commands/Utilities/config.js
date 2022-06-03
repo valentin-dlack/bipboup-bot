@@ -61,6 +61,18 @@ module.exports = {
                 .setName('log-edit')
                 .setDescription('Activer ou désactiver les logs lors de la modification d\'un message')
                 .addBooleanOption(option => option.setName('log-edit').setDescription('Activer ou désactiver les logs lors de la modification d\'un message').setRequired(true))
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('verified-role')
+                .setDescription('Changer le role vérifié (vérification anti-raid)')
+                .addRoleOption(option => option.setName('verified-role').setDescription('Le role vérifié (vérification anti-raid)').setRequired(true))
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+                .setName('welcome-channel')
+                .setDescription('Changer le salon ou sera envoyé le message de bienvenue')
+                .addChannelOption(option => option.setName('welcome-channel').setDescription('Le salon ou sera envoyé le message de bienvenue').setRequired(true))
         ),
     permissions: ["ADMINISTRATOR"],
     category: 'Utilitaires',
@@ -102,17 +114,33 @@ module.exports = {
             });
         } else if (interaction.options.getSubcommand() === "welcome-msg") {
             let welcomeMsg = interaction.options.getBoolean("welcome-msg");
-            //update welcome msg
-            conn.query(`UPDATE OPT_${interaction.guild.id} SET welcomeMsg = ${welcomeMsg} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+            //check if the welcome channel is set
+            conn.query(`SELECT * FROM OPT_${interaction.guild.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
                 if (err) throw err;
-                interaction.reply('Le message de bienvenue a été mis à jour');
+                if (rows[0].welcome_channel == "0") {
+                    interaction.reply('Vous devez d\'abord définir le salon de bienvenue avec la commande `/config welcome-channel`');
+                } else {
+                    //update welcome msg
+                    conn.query(`UPDATE OPT_${interaction.guild.id} SET welcomeMsg = ${welcomeMsg} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                        if (err) throw err;
+                        interaction.reply('Le message de bienvenue a été mis à jour');
+                    });
+                }
             });
         } else if (interaction.options.getSubcommand() === "join-verification") {
             let joinVerification = interaction.options.getBoolean("join-verification");
-            //update join verification
-            conn.query(`UPDATE OPT_${interaction.guild.id} SET joinVerification = ${joinVerification} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+            //check if the verification role is set
+            conn.query(`SELECT * FROM OPT_${interaction.guild.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
                 if (err) throw err;
-                interaction.reply('La vérification d\'arrivée a été mis à jour');
+                if (rows[0].verified_role == "0") {
+                    interaction.reply('Vous devez d\'abord définir un role de vérification (voir la commande `/config verified-role`)');
+                } else {
+                    //update join verification
+                    conn.query(`UPDATE OPT_${interaction.guild.id} SET joinVerification = ${joinVerification} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                        if (err) throw err;
+                        interaction.reply('La vérification des nouveaux membres a été mis à jour');
+                    });
+                }
             });
         } else if (interaction.options.getSubcommand() === "member-count") {
             let memberCount = interaction.options.getBoolean("member-count");
@@ -135,7 +163,21 @@ module.exports = {
                 if (err) throw err;
                 interaction.reply('Les logs lors de la modification d\'un message ont été mis à jour');
             });
-        }   
+        } else if (interaction.options.getSubcommand() === "verified-role") {
+            let verifiedRole = interaction.options.getRole("verified-role");
+            //update verified role
+            conn.query(`UPDATE OPT_${interaction.guild.id} SET verifiedRole = ${verifiedRole.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                if (err) throw err;
+                interaction.reply('Le role vérifié a été mis à jour');
+            });
+        } else if (interaction.options.getSubcommand() === "welcome-channel") {
+            let welcomeChannel = interaction.options.getChannel("welcome-channel");
+            //update welcome channel
+            conn.query(`UPDATE OPT_${interaction.guild.id} SET welcome_channel = ${welcomeChannel.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                if (err) throw err;
+                interaction.reply('Le salon de bienvenue a été mis à jour');
+            });
+        }
 
     }
 }

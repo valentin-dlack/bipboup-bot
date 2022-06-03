@@ -27,7 +27,7 @@ module.exports = {
             if (err) throw err;
 
             if (rows.length < 1 || rows[0].log_channel == '0') {
-                conn.query(`INSERT INTO OPT_${interaction.guild.id}  (guild_id, log_channel, mod_role, welcomeMsg, joinVerification, memberCount, logDel, logEdit) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`, [interaction.guild.id, log_channel.id, mod_role.id, false, false, false, true, false], (err, rows) => {
+                conn.query(`INSERT INTO OPT_${interaction.guild.id}  (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [interaction.guild.id, log_channel.id, mod_role.id, '0', '0', false, false, false, true, false], (err, rows) => {
                     if (err) throw err;
                     interaction.reply('Super ! La configuration de base a été effectuée avec succès !\n Vous pouvez maintenant changer les options avec la commande `/config` !');
                 });
