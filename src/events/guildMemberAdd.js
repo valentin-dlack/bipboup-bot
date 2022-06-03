@@ -1,5 +1,5 @@
 const { createCanvas, loadImage } = require('canvas');
-const { MessageEmbed, MessageAttachment, MessageButton, MessageActionRow } = require('discord.js');
+const { MessageEmbed, MessageButton, MessageActionRow } = require('discord.js');
 const cfg = require('../../cfg.json');
 const mysql = require('mysql');
 
@@ -111,7 +111,9 @@ module.exports = {
                             it.reply('Votre accès au serveur est maintenant validé !');
                             member.roles.add(verifiedRole);
                             msg.delete();
-                            welcomeMsg(member);
+                            if (rows[0].welcomeMsg == true) {
+                                welcomeMsg(member);
+                            }
                             return
                         } else if (it.customId === 'cancel_btn' && it.user.id === member.user.id) {
                             it.reply('Vous avez été exclu du serveur !');
