@@ -11,6 +11,7 @@ const eventFiles = fs.readdirSync("./src/events").filter(file => file.endsWith("
 const commandFolders = fs.readdirSync("./src/commands");
 
 (async() => {
+    //start the bot
     for (file of functions) {
         require(`./functions/${file}`)(client);
     }
