@@ -16,7 +16,7 @@ module.exports = {
     once: false,
 
     async execute(message, client) {
-        conn.query(`SELECT * FROM OPT_${message.guild.id} WHERE guild_id = ${message.guild.id}`, (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${message.guild.id}`, (err, rows) => {
             if (err) throw err;
 
             if (rows[0].logDel == true) {
@@ -38,9 +38,9 @@ module.exports = {
                     .addField(`Timestamp :`, `<t:${Math.floor(Date.now()/1000)}>`)
                     .addField(`Contenu du message :`, `\`\`\`${message.cleanContent ? message.cleanContent : "[Empty message]"}\`\`\``)
                     .addField(`Attachements :`, `${attachment ? attachment.join('\n') : "No Attachements"}`)
-                    .setFooter({text : `ID du message : ${message.id}`, iconUrl : message.author.displayAvatarURL({ format: 'png' })});
+                    .setFooter({ text: `ID du message : ${message.id}`, iconUrl: message.author.displayAvatarURL({ format: 'png' }) });
 
-                logChannel.send({embeds: [logEmbed]});
+                logChannel.send({ embeds: [logEmbed] });
             }
         });
     }

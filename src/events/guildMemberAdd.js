@@ -25,12 +25,12 @@ module.exports = {
             return ctx.font;
         };
 
-        conn.query(`SELECT * FROM OPT_${member.guild.id} WHERE guild_id = ${member.guild.id}`, async (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${member.guild.id}`, async(err, rows) => {
             if (err) throw err;
             if (rows.length < 1) {
                 return;
             } else {
-                const welcomeMsg = async (member) => {
+                const welcomeMsg = async(member) => {
                     const canvas = createCanvas(700, 250);
                     const ctx = canvas.getContext('2d');
 
@@ -63,7 +63,7 @@ module.exports = {
                         log_channel.send(`${member.user.username} vient de rejoindre le serveur ! **Je n'ai pas trouvé de salon de bienvenue**`);
                     }
 
-                    channel.send({ content: `Bienvenue ${member} !`, files: [{ attachment: canvas.toBuffer(), name: 'welcome.png' }]});
+                    channel.send({ content: `Bienvenue ${member} !`, files: [{ attachment: canvas.toBuffer(), name: 'welcome.png' }] });
                 };
 
 
@@ -79,24 +79,24 @@ module.exports = {
                         .setColor('#cc0000')
                         .setTitle('Message de vérification')
                         .addField(`Bonjour ${member.user.username} !`,
-                        `**Pour accéder à l'entièreté du serveur de ${member.guild.name} il faut :**
+                            `**Pour accéder à l'entièreté du serveur de ${member.guild.name} il faut :**
                         Valider que vous n'êtes pas un bot en cliquant sur ✅ (vous avez 30 secondes)
                         \u200b`)
                         .setTimestamp()
-                        .setFooter({ text: 'Join Verification', iconURL: 'https://i.imgur.com/JLhTSlQ.png'})
+                        .setFooter({ text: 'Join Verification', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 
                     const row = new MessageActionRow()
                         .addComponents(
                             new MessageButton()
-                                .setLabel("Verify")
-                                .setStyle("PRIMARY")
-                                .setEmoji("✅")
-                                .setCustomId("verify_btn"),
+                            .setLabel("Verify")
+                            .setStyle("PRIMARY")
+                            .setEmoji("✅")
+                            .setCustomId("verify_btn"),
                             new MessageButton()
-                                .setLabel("Cancel")
-                                .setStyle("SECONDARY")
-                                .setEmoji("❌")
-                                .setCustomId("cancel_btn"),
+                            .setLabel("Cancel")
+                            .setStyle("SECONDARY")
+                            .setEmoji("❌")
+                            .setCustomId("cancel_btn"),
                         );
 
                     let msg = await member.user.send({

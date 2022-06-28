@@ -24,27 +24,27 @@ module.exports = {
 
     async execute(guild, client) {
         console.log(`> Joined guild ${guild.name} (${guild.id}) at ${new Date()}`);
-        conn.query(`CREATE TABLE IF NOT EXISTS OPT_${guild.id} (guild_id VARCHAR(30) NOT NULL, log_channel VARCHAR(30) NOT NULL, mod_role VARCHAR(30) NOT NULL, verifiedRole VARCHAR(30) NOT NULL, welcome_channel VARCHAR(30) NOT NULL, welcomeMsg BOOLEAN, joinVerification BOOLEAN, memberCount BOOLEAN, logDel BOOLEAN, logEdit BOOLEAN)`, (err, rows) => {
+        conn.query(`CREATE TABLE IF NOT EXISTS OPTIONS (guild_id VARCHAR(30) NOT NULL, log_channel VARCHAR(30) NOT NULL, mod_role VARCHAR(30) NOT NULL, verifiedRole VARCHAR(30) NOT NULL, welcome_channel VARCHAR(30) NOT NULL, welcomeMsg BOOLEAN, joinVerification BOOLEAN, memberCount BOOLEAN, logDel BOOLEAN, logEdit BOOLEAN)`, (err, rows) => {
             if (err) throw err;
-            console.log(`> Created table OPT_${guild.id}`);
+            console.log(`> Created table OPTIONS`);
         });
-        conn.query(`CREATE TABLE IF NOT EXISTS TEMPBANS_${guild.id} (ban_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, user_id VARCHAR(30) NOT NULL, reason VARCHAR(255) NOT NULL, time VARCHAR(30) NOT NULL)`, (err, rows) => {
+        conn.query(`CREATE TABLE IF NOT EXISTS TEMPBANS (ban_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, guild_id VARCHAR(30) NOT NULL, user_id VARCHAR(30) NOT NULL, reason VARCHAR(255) NOT NULL, time VARCHAR(30) NOT NULL)`, (err, rows) => {
             if (err) throw err;
-            console.log(`> Created table TEMPBANS_${guild.id}`);
+            console.log(`> Created table TEMPBANS`);
         });
-        conn.query(`CREATE TABLE IF NOT EXISTS WARN_${guild.id} (warn_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, user_id VARCHAR(30) NOT NULL, reason VARCHAR(255) NOT NULL)`, (err, rows) => {
+        conn.query(`CREATE TABLE IF NOT EXISTS WARNS (warn_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, guild_id VARCHAR(30) NOT NULL, user_id VARCHAR(30) NOT NULL, reason VARCHAR(255) NOT NULL)`, (err, rows) => {
             if (err) throw err;
-            console.log(`> Created table WARN_${guild.id}`);
+            console.log(`> Created table WARNS`);
         });
 
         console.log(`> Created tables for guild ${guild.name} (${guild.id})`);
         console.log(`> Filling Option table for guild ${guild.name} (${guild.id})`);
 
-        conn.query(`SELECT * FROM OPT_${guild.id} WHERE guild_id = ${guild.id}`, (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${guild.id}`, (err, rows) => {
             if (err) throw err;
 
             if (rows.length < 1) {
-                conn.query(`INSERT INTO OPT_${guild.id} (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [guild.id, '0', '0', '0', '0', false, false, false, false, false], (err, rows) => {
+                conn.query(`INSERT INTO OPTIONS (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) WHERE guild_id = ${guild.id}`, [guild.id, '0', '0', '0', '0', false, false, false, false, false], (err, rows) => {
                     if (err) throw err;
                     console.log(`> Inserted guild ${guild.name} (${guild.id}) into guilds table`);
                 });
@@ -70,7 +70,7 @@ module.exports = {
             )
             .addField(`Comment me configurer ?`, `❯❯ Pour ça, il faut faire la commande \`/setup\` et renseigner les informations nécessaires (seulement pour les admins).`)
             .setTimestamp()
-            .setFooter({ text: 'Made by Lack, Thanks for adding :D', iconURL: 'https://i.imgur.com/JLhTSlQ.png'})
+            .setFooter({ text: 'Made by Lack, Thanks for adding :D', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 
         const channels = guild.channels.cache
         let owner = await guild.fetchOwner()
@@ -79,7 +79,7 @@ module.exports = {
             .setColor('YELLOW')
             .setTitle('   -❯    GuildDevLogs    ❰-   ')
             .setDescription(`❯❯ Added the bot on a new guild :`)
-            .addField('Informations :', 
+            .addField('Informations :',
                 `Guild name : \`${guild.name}\`
                 Guild ID : \`${guild.id}\`
                 Guild Owner : ${owner.user.username + owner.user.discriminator}
@@ -92,16 +92,16 @@ module.exports = {
                 \u200b`
             )
             .setTimestamp()
-            .setFooter({ text: `Made by Lack - ${new Date()}`, iconURL: 'https://i.imgur.com/JLhTSlQ.png'})
+            .setFooter({ text: `Made by Lack - ${new Date()}`, iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 
         let system_channel = guild.systemChannel;
         if (system_channel) {
-            system_channel.send({embeds: [welcomeEmbed]});
+            system_channel.send({ embeds: [welcomeEmbed] });
         }
 
         let guild_logs = client.channels.cache.get(cfg.errorHandler.guildlog_id);
         let logs_channel = client.channels.cache.find(channel => channel.id === cfg.errorHandler.channel_id);
 
-        logs_channel.send({embeds: [logsEmbed]});
+        logs_channel.send({ embeds: [logsEmbed] });
     }
 };

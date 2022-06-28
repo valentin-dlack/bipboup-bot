@@ -16,7 +16,7 @@ module.exports = {
     once: false,
 
     async execute(oldMessage, newMessage, client) {
-        conn.query(`SELECT * FROM OPT_${oldMessage.guild.id} WHERE guild_id = ${oldMessage.guild.id}`, (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${oldMessage.guild.id}`, (err, rows) => {
             if (err) throw err;
 
             if (rows[0].logEdit == true) {
@@ -42,9 +42,9 @@ module.exports = {
                     .addField(`Contenu de l'ancien message :`, `\`\`\`${oldMessage.cleanContent ? oldMessage.cleanContent : "[Empty message]"}\`\`\``)
                     .addField(`Contenu du nouveau message :`, `\`\`\`${newMessage.cleanContent ? newMessage.cleanContent : "[Empty message]"}\`\`\``)
                     .addField(`Attachements de l'ancien message :`, `${attachment ? attachment.join('\n') : "No Attachements"}`)
-                    .setFooter({text : `ID du message : ${newMessage.id}`, iconURL : oldMessage.author.displayAvatarURL({ format: 'png' })});
+                    .setFooter({ text: `ID du message : ${newMessage.id}`, iconURL: oldMessage.author.displayAvatarURL({ format: 'png' }) });
 
-                logChannel.send({embeds: [logEmbed]});
+                logChannel.send({ embeds: [logEmbed] });
             }
         });
     }

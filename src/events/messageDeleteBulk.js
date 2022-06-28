@@ -16,7 +16,7 @@ module.exports = {
     once: false,
 
     async execute(messages, client) {
-        conn.query(`SELECT * FROM OPT_${messages.first().guild.id} WHERE guild_id = ${messages.first().guild.id}`, (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${messages.first().guild.id}`, (err, rows) => {
             if (err) throw err;
 
             if (rows[0].logDel == true) {
@@ -35,9 +35,9 @@ module.exports = {
                     .addField(`Informations :`, `▶ Messages supprimés dans : <#${messages.first().channel.id}>`)
                     .addField(`Nombre de messages supprimés:`, `\`${message_count}\``)
                     .addField(`Timestamp :`, `<t:${Math.floor(Date.now()/1000)}>`)
-                    .setFooter({text : `Bulk Delete`, iconUrl : client.user.displayAvatarURL({ format: 'png' })});
+                    .setFooter({ text: `Bulk Delete`, iconUrl: client.user.displayAvatarURL({ format: 'png' }) });
 
-                logChannel.send({embeds: [logEmbed]});
+                logChannel.send({ embeds: [logEmbed] });
             }
         });
     }

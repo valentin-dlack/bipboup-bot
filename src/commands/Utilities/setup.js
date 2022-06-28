@@ -1,4 +1,4 @@
-const {SlashCommandBuilder} = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 const cfg = require('../../../cfg.json');
 const mysql = require('mysql');
 
@@ -23,12 +23,12 @@ module.exports = {
         let log_channel = interaction.options.getChannel('log_channel');
         let mod_role = interaction.options.getRole('mod_role');
 
-        conn.query(`SELECT * FROM OPT_${interaction.guild.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
             if (err) throw err;
 
             if (rows.length < 1 || rows[0].log_channel == '0') {
                 //update already existing guild
-                conn.query(`UPDATE OPT_${interaction.guild.id} SET log_channel = '${log_channel.id}', mod_role = '${mod_role.id}' WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                conn.query(`UPDATE OPTIONS SET log_channel = '${log_channel.id}', mod_role = '${mod_role.id}' WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
                     if (err) throw err;
                     interaction.reply('Super ! La configuration de base a été effectuée avec succès !\n Vous pouvez maintenant changer les options avec la commande `/config` !');
                 });
