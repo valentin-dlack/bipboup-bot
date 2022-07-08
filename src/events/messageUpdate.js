@@ -18,7 +18,7 @@ module.exports = {
     async execute(oldMessage, newMessage, client) {
         conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${oldMessage.guild.id}`, (err, rows) => {
             if (err) throw err;
-            if (rows.length < 1) {
+            if (rows.length > 0) {
                 if (rows[0].logEdit == true) {
                     let logChannel = oldMessage.guild.channels.cache.find(channel => channel.id === rows[0].log_channel);
                     if (!logChannel) return;
