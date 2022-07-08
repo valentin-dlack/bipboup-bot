@@ -20,7 +20,7 @@ module.exports = {
     category: "Moderation",
 
     async execute(interaction) {
-        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, async (err, rows) => {
             if (err) throw err;
             let user_id = interaction.options.getString("user_id");
 
