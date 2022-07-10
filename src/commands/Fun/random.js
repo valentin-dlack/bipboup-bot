@@ -73,7 +73,7 @@ module.exports = {
             const num = Math.floor(Math.random() * 100000);
             imgMsg.setDescription(`Cette waifu n\'existe pas\n*Numéro #${num}*`)
             imgMsg.setImage('attachment://ai-waifu.jpg')
-            if (message.channel.guild.id == "659289330010816525") {
+            if (interaction.channel.guild.id == "659289330010816525") {
                 imgMsg.setDescription(`Cette waifu n\'existe pas\n*S/o Foxy, Numéro #${num}*`)
             }
             interaction.reply({embeds: [imgMsg], files: [{attachment: `https://www.thiswaifudoesnotexist.net/example-${num}.jpg`, name: 'ai-waifu.jpg'}]});
