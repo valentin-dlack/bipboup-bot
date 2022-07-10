@@ -59,9 +59,9 @@ module.exports = {
             }
 
             if (logsChannel !== "none") {
-                logsChannel.send({ embeds: [kickEmbed] });
+                logsChannel.send({ embeds: [unbanEmbed] });
             } else {
-                interaction.user.send({ embeds: [kickEmbed] });
+                interaction.user.send({ embeds: [unbanEmbed] });
             }
 
             try {
