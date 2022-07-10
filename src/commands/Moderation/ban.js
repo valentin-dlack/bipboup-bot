@@ -35,6 +35,7 @@ module.exports = {
                 }
 
                 let logsChannel = rows[0].log_channel
+                logsChannel = interaction.guild.channels.cache.find(channel => channel.id === logsChannel)
                 let banId = Math.floor(Math.random() * Date.now()) + 1;
 
                 let dmBanEmbed = new MessageEmbed()
