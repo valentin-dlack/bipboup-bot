@@ -48,7 +48,11 @@ module.exports = {
 						
 						let system_channel = guild.systemChannel;
 						if (system_channel) {
-							system_channel.send({ embeds: [welcomeEmbed] });
+							try {
+								system_channel.send({ embeds: [welcomeEmbed] });
+							} catch (error) {
+								console.log(`> Error while sending welcome message to ${guild.name} (${guild.id})`);
+							}
 						}
 					});
 				} else {
