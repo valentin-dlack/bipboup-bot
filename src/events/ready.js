@@ -47,7 +47,9 @@ module.exports = {
 							.setFooter({ text: 'Made by Lack, New Update :D', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 						
 						let system_channel = guild.systemChannel;
-						system_channel.send({ embeds: [welcomeEmbed] });
+						if (system_channel) {
+							system_channel.send({ embeds: [welcomeEmbed] });
+						}
 					});
 				} else {
 					console.log(`> Guild ${guild.name} (${guild.id}) already in guilds table`);
