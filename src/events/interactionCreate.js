@@ -1,4 +1,13 @@
 const config = require('../../cfg.json');
+const mysql = require('mysql');
+
+const conn = mysql.createPool({
+    connectionLimit: 50,
+    host: 'localhost',
+    user: 'root',
+    password: config.db_secret,
+    database: config.db_name
+});
 
 module.exports = {
     name: 'interactionCreate',
