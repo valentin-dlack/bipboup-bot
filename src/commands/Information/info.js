@@ -248,7 +248,7 @@ module.exports = {
                     `**• Client :** ${interaction.client.user.tag} (${interaction.client.user.id})
                     **• Commandes :** ${interaction.client.commands.size}
                     **• Serveurs :** ${interaction.client.guilds.cache.size.toLocaleString()}
-                    **• Utilisateurs :** ${interaction.client.users.cache.size.toLocaleString()}
+                    **• Utilisateurs :** ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}
                     **• Channels :** ${interaction.client.channels.cache.size.toLocaleString()}
                     **• Date de création :** <t:${Math.round(interaction.client.user.createdTimestamp/1000)}:F>
                     **• NodeJS :** ${process.version}

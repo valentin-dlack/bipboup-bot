@@ -26,7 +26,7 @@ module.exports = {
 				if (err) throw err;
 	
 				if (rows.length < 1) {
-					conn.query(`INSERT INTO OPTIONS (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [guild.id, '0', '0', '0', '0', false, false, false, false, false], (err, rows) => {
+					conn.query(`INSERT INTO OPTIONS (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit, memberCountChannel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [guild.id, '0', '0', '0', '0', false, false, false, false, false, '0'], (err, rows) => {
 						if (err) throw err;
 						console.log(`> Inserted guild ${guild.name} (${guild.id}) into guilds table`);
 						let welcomeEmbed = new MessageEmbed()

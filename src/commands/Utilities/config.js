@@ -145,10 +145,31 @@ module.exports = {
         } else if (interaction.options.getSubcommand() === "member-count") {
             let memberCount = interaction.options.getBoolean("member-count");
             //update member count
-            conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
-                if (err) throw err;
-                interaction.reply('Le compteur de membres a été mis à jour');
-            });
+            if (memberCount == true) {
+                //create a new voice channel for the member count where you can't connect to it
+                let memberCountChannel = interaction.guild.channels.create(`Membres : ${interaction.guild.memberCount}`, {
+                    type: 'GUILD_VOICE',
+                    permissionOverwrites: [
+                        {
+                            id: interaction.guild.id,
+                            deny: ['CONNECT']
+                        }
+                    ]
+                });
+                //update member count channel
+                conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount} AND memberCountChannel = ${memberCountChannel.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                    if (err) throw err;
+                    interaction.reply('Le compteur de membres a été mis à jour');
+                });
+            } else {
+                //delete the member count channel
+                interaction.guild.channels.cache.find(channel => channel.name === `Membres : ${interaction.guild.memberCount}`).delete();
+                //update member count channel
+                conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount} AND memberCountChannel = 0 WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                    if (err) throw err;
+                    interaction.reply('Le compteur de membres a été mis à jour');
+                });
+            }
         } else if (interaction.options.getSubcommand() === "log-delete") {
             let logDel = interaction.options.getBoolean("log-del");
             //update log delete
