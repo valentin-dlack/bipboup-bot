@@ -49,7 +49,9 @@ module.exports = {
 						let system_channel = guild.systemChannel;
 						if (system_channel) {
 							try {
-								system_channel.send({ embeds: [welcomeEmbed] });
+								if (system_channel.permissionsFor(guild.me).has('SEND_MESSAGES')) {
+									system_channel.send({ embeds: [welcomeEmbed] });
+								}
 							} catch (error) {
 								console.log(`> Error while sending welcome message to ${guild.name} (${guild.id})`);
 							}
