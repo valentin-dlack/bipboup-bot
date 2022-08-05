@@ -146,26 +146,37 @@ module.exports = {
             let memberCount = interaction.options.getBoolean("member-count");
             //update member count
             if (memberCount == true) {
-                //create a new voice channel for the member count where you can't connect to it
-                let memberCountChannel = interaction.guild.channels.create(`Membres : ${interaction.guild.memberCount}`, {
-                    type: 'GUILD_VOICE',
-                    permissionOverwrites: [
-                        {
-                            id: interaction.guild.id,
-                            deny: ['CONNECT']
-                        }
-                    ]
-                });
-                //update member count channel
-                conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount} AND memberCountChannel = ${memberCountChannel.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                // check if the member count channel is not already set
+                conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, async (err, rows) => {
                     if (err) throw err;
-                    interaction.reply('Le compteur de membres a été mis à jour');
+                    if (rows[0].memberCountChannel != "0") {
+                        interaction.reply('Le compteur de membres est déjà activé');
+                        return;
+                    }
+                    //create a new voice channel for the member count where you can't connect to it
+                    let memberCountChannel = await interaction.guild.channels.create(`Membres : ${interaction.guild.memberCount}`, {
+                        type: 'GUILD_VOICE',
+                        permissionOverwrites: [
+                            {
+                                id: interaction.guild.id,
+                                deny: ['CONNECT']
+                            }
+                        ]
+                    });
+                    //update member count channel
+                    conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount}, memberCountChannel = ${memberCountChannel.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                        if (err) throw err;
+                        interaction.reply('Le compteur de membres a été mis à jour');
+                    });
                 });
             } else {
                 //delete the member count channel
-                interaction.guild.channels.cache.find(channel => channel.name === `Membres : ${interaction.guild.memberCount}`).delete();
+                conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                    if (err) throw err;
+                    interaction.guild.channels.cache.get(rows[0].memberCountChannel).delete();
+                });
                 //update member count channel
-                conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount} AND memberCountChannel = 0 WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount}, memberCountChannel = 0 WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
                     if (err) throw err;
                     interaction.reply('Le compteur de membres a été mis à jour');
                 });

@@ -134,6 +134,18 @@ module.exports = {
                 } else if (rows[0].welcomeMsg == true) {
                     welcomeMsg(member);
                 }
+                if (rows[0].memberCount == true) {
+                    let memberCount = member.guild.memberCount;
+                    let memberCountChannel = member.guild.channels.cache.find(ch => ch.id === rows[0].memberCountChannel);
+                    if (!memberCountChannel) {
+                        let log_channel = member.guild.channels.cache.find(ch => ch.id === rows[0].log_channel);
+                        if (!log_channel) {
+                            return;
+                        }
+                        log_channel.send(`Impossible de trouver le salon de comptage des membres.`);
+                    }
+                    memberCountChannel.setName(`Membres : ${memberCount}`);
+                }
             }
         });
     }

@@ -87,8 +87,8 @@ module.exports = {
                 Verification Level : \`${verificationLevels[guild.verificationLevel]}\`
                 Member Count : \`${guild.memberCount}\`
                 Bot Count : \`${guild.members.cache.filter(member => member.user.bot).size}\`
-                Text Channels : \`${channels.filter(channel => channel.type === 'text').size}\`
-                Vocal Channels : \`${channels.filter(channel => channel.type === 'voice').size}\`
+                Text Channels : \`${channels.filter(channel => channel.type === 'GUILD_TEXT').size}\`
+                Vocal Channels : \`${channels.filter(channel => channel.type === 'GUILD_VOICE').size}\`
                 \u200b`
             )
             .setTimestamp()
