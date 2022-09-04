@@ -41,7 +41,7 @@ module.exports = {
 
                     ctx.font = '28px sans-serif';
                     ctx.fillStyle = '#ffffff';
-                    ctx.fillText(`Bienvenue sur le serveur ${member.guild.name} !`, canvas.width / 2.5, canvas.height / 3.5);
+                    ctx.fillText(`Bienvenue sur ${member.guild.name} !`, canvas.width / 2.5, canvas.height / 3.5);
 
                     ctx.font = applyText(canvas, `${member.user.username}`);
                     ctx.fillStyle = '#ffffff';
