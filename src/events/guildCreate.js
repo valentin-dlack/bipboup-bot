@@ -24,7 +24,7 @@ module.exports = {
 
     async execute(guild, client) {
         console.log(`> Joined guild ${guild.name} (${guild.id}) at ${new Date()}`);
-        conn.query(`CREATE TABLE IF NOT EXISTS OPTIONS (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, guild_id VARCHAR(30) NOT NULL, log_channel VARCHAR(30) NOT NULL, mod_role VARCHAR(30) NOT NULL, verifiedRole VARCHAR(30) NOT NULL, welcome_channel VARCHAR(30) NOT NULL, welcomeMsg BOOLEAN, joinVerification BOOLEAN, memberCount BOOLEAN, logDel BOOLEAN, logEdit BOOLEAN)`, (err, rows) => {
+        conn.query(`CREATE TABLE IF NOT EXISTS OPTIONS (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, guild_id VARCHAR(30) NOT NULL, log_channel VARCHAR(30) NOT NULL, mod_role VARCHAR(30) NOT NULL, verifiedRole VARCHAR(30) NOT NULL, welcome_channel VARCHAR(30) NOT NULL, welcomeMsg BOOLEAN, joinVerification BOOLEAN, memberCount BOOLEAN, logDel BOOLEAN, logEdit BOOLEAN, memberCountChannel VARCHAR(30) NOT NULL)`, (err, rows) => {
             if (err) throw err;
             console.log(`> Created table OPTIONS`);
         });
