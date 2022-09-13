@@ -35,6 +35,7 @@ module.exports = {
                 }
 
                 let logsChannel = rows[0].log_channel
+                logsChannel = interaction.guild.channels.cache.find(channel => channel.id === logsChannel)
 
                 let dmKickEmbed = new MessageEmbed()
                     .setColor("#bc0000")
