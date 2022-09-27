@@ -32,7 +32,7 @@ module.exports = {
             if (err) throw err;
             console.log(`> Created table TEMPBANS`);
         });
-        conn.query(`CREATE TABLE IF NOT EXISTS WARNS (warn_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, guild_id VARCHAR(30) NOT NULL, user_id VARCHAR(30) NOT NULL, reason VARCHAR(255) NOT NULL)`, (err, rows) => {
+        conn.query(`CREATE TABLE IF NOT EXISTS WARNS (warn_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT, guild_id VARCHAR(30) NOT NULL, user_id VARCHAR(30) NOT NULL, reason VARCHAR(255) NOT NULL, uid VARCHAR(255) UNIQUE NOT NULL, date VARCHAR(25) NOT NULL)`, (err, rows) => {
             if (err) throw err;
             console.log(`> Created table WARNS`);
         });

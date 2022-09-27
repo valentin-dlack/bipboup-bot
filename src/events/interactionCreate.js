@@ -1,3 +1,4 @@
+const { MessageEmbed } = require("discord.js");
 const config = require('../../cfg.json');
 const mysql = require('mysql');
 
@@ -12,6 +13,25 @@ const conn = mysql.createPool({
 module.exports = {
     name: 'interactionCreate',
     async execute(interaction, client) {
+
+        //selectMenu collector
+        if (interaction.isSelectMenu()) {
+            if (interaction.customId === "warn_list_select") {
+                conn.query(`SELECT * FROM WARNS WHERE warn_id = ${interaction.values[0]}`, (err, rows) => {
+                    if (err) throw err;
+                    let warn = rows[0];
+                    let user = interaction.client.users.cache.find(user => user.id === warn.user_id)
+                    let warnEmbed = new MessageEmbed()
+                        .setColor("#bc0000")
+                        .setDescription(`Avertissement :`)
+                        .addFields({ name: "Utilisateur warn :", value: `${user.username}, ID : \`${user.id}\`` }, { name: "Raison :", value: `${warn.reason}` }, { name: "Date du warn :", value: `${warn.date}` }, { name: "ID du Warn :", value: `${warn.uid}` })
+                        .setFooter({ text: `Warn manager`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 }) })
+
+                    interaction.update({ embeds: [warnEmbed] })
+                })
+            }
+        }
+
         if (!interaction.isCommand()) return;
 
         const command = client.commands.get(interaction.commandName);
