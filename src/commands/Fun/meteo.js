@@ -20,8 +20,8 @@ module.exports = {
         .setName('meteo')
         .setDescription(`Donne la météo d\'une ville précise.`)
         .addStringOption(option => option.setName('city').setDescription('Ville de votre choix').setRequired(true)),
-        permissions: [],
-        category: "Fun",
+    permissions: [],
+    category: "Fun",
     async execute(interaction) {
         let city = interaction.options.getString('city')
         let lati, long;
