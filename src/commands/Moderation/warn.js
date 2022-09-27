@@ -130,7 +130,7 @@ module.exports = {
                 const row = new MessageActionRow()
                     .addComponents(
                         new MessageSelectMenu()
-                        .setCustomId('warn_list_select')
+                        .setCustomId(`warn_list_${interaction.user.id}`)
                         .setPlaceholder('Aucune Selection')
                         .addOptions(objects),
                     );

@@ -16,7 +16,7 @@ module.exports = {
 
         //selectMenu collector
         if (interaction.isSelectMenu()) {
-            if (interaction.customId === "warn_list_select") {
+            if (interaction.customId === `warn_list_${interaction.user.id}`) {
                 conn.query(`SELECT * FROM WARNS WHERE warn_id = ${interaction.values[0]}`, (err, rows) => {
                     if (err) throw err;
                     let warn = rows[0];
@@ -29,6 +29,8 @@ module.exports = {
 
                     interaction.update({ embeds: [warnEmbed] })
                 })
+            } else {
+                interaction.reply({ content: "Ce n'est pas ton menu...", ephemeral: true });
             }
         }
 
