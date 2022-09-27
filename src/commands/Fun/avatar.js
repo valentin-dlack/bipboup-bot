@@ -31,8 +31,8 @@ module.exports = {
             )
             .addUserOption(option => option.setName('user').setDescription(`Choisi l'utilisateur dont tu veux voir la photo de profil`))
         ),
-        permissions: [],
-        category: "Fun",
+    permissions: [],
+    category: "Fun",
 
     async execute(interaction) {
         if (interaction.options.getSubcommand() === "pimp") {
@@ -114,10 +114,10 @@ module.exports = {
             let userPP = new MessageEmbed()
                 .setColor(uRoleColor)
                 .setTitle(`Photo de profil de ${member.user.username}`)
-                .addField(`Qualité`, `${sizeQual} pixels`, true)
+                .addFields({ name: `Qualité`, value: `${sizeQual} pixels`, inline: true })
                 .setImage(userAvatar)
                 .setTimestamp()
-                .setFooter('Made by Lack', 'https://i.imgur.com/JLhTSlQ.png');
+                .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png' });
             interaction.reply({
                 embeds: [userPP]
             });

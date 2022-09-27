@@ -40,18 +40,32 @@ module.exports = {
                 let dmKickEmbed = new MessageEmbed()
                     .setColor("#bc0000")
                     .setDescription(`Vous avez été exclu du serveur ${interaction.guild.name}`)
-                    .addField("Exclu par :", `${interaction.user.username}`)
-                    .addField("Raison :", `${reason}`)
-                    .addField("Date de l'exclusion :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
+                    .addFields({
+                        name: "Exclu par :",
+                        value: `${interaction.user.username}`
+                    }, {
+                        name: "Raison :",
+                        value: `${reason}`
+                    }, {
+                        name: "Date de l'exclusion :",
+                        value: `<t:${Math.round(new Date().getTime()/1000)}:F>`
+                    })
                     .setFooter({ text: `Kick Logger`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 }) })
                     .setTimestamp();
 
                 let kickEmbed = new MessageEmbed()
                     .setColor("#bc0000")
                     .setDescription(`${targetMember.user.username} a été exclu du serveur ${interaction.guild.name}`)
-                    .addField("Exclu par :", `${interaction.user.username}`)
-                    .addField("Raison :", `${reason}`)
-                    .addField("Date de l'exclusion :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
+                    .addFields({
+                        name: "Exclu par :",
+                        value: `${interaction.user.username}`
+                    }, {
+                        name: "Raison :",
+                        value: `${reason}`
+                    }, {
+                        name: "Date de l'exclusion :",
+                        value: `<t:${Math.round(new Date().getTime()/1000)}:F>`
+                    })
                     .setFooter({ text: `Kick Logger`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 }) })
                     .setTimestamp();
 
