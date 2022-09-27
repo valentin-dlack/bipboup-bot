@@ -37,18 +37,19 @@ module.exports = {
             .setColor('YELLOW')
             .setTitle('   -❯    GuildDevLogs    ❰-   ')
             .setDescription(`❯❯ The bot leaved a server :( :`)
-            .addField('Informations :',
-                `Guild name : \`${guild.name}\`
+            .addFields({
+                name: 'Informations :',
+                value: `Guild name : \`${guild.name}\`
                 Guild ID : \`${guild.id}\`
                 Guild Owner : ${owner.user.username + owner.user.discriminator}
                 Client Leaved at : \`${d.toDateString()}, ${d.toLocaleTimeString('fr-FR')}\`
                 Verification Level : \`${verificationLevels[guild.verificationLevel]}\`
                 Member Count : \`${guild.memberCount}\`
                 Bot Count : \`${guild.members.cache.filter(member => member.user.bot).size}\`
-                Text Channels : \`${channels.filter(channel => channel.type === 'text').size}\`
-                Vocal Channels : \`${channels.filter(channel => channel.type === 'voice').size}\`
+                Text Channels : \`${channels.filter(channel => channel.type === 'GUILD_TEXT').size}\`
+                Vocal Channels : \`${channels.filter(channel => channel.type === 'GUILD_VOICE').size}\`
                 \u200b`
-            )
+            })
             .setTimestamp()
             .setFooter({ text: `Made by Lack`, iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 

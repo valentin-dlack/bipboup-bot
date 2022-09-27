@@ -50,21 +50,12 @@ module.exports = {
                         .setTitle(`Météo actuelle à ${city}, ${res[0].country} :`)
                         .setDescription(`Conditions Météos : ${apiResponse.current.weather[0].description}`)
                         .setThumbnail(`https://openweathermap.org/img/wn/${apiResponse.current.weather[0].icon}@2x.png`)
-                        .addField('Température : ', `${apiResponse.current.temp}℃`, true)
-                        .addField('Ressenti :', `${apiResponse.current.feels_like}℃`, true)
-                        .addField('Vitesse du vent :', `${apiResponse.current.wind_speed} km/h`, true)
-                        .addField('Direction du vent :', `${apiResponse.current.wind_deg}°`, true)
-                        .addField('Pression :', `${apiResponse.current.pressure} MilliBar`, true)
-                        .addField('Pluie :', rain ? `${rain} Millimètres` : apiResponse.minutely ? `${apiResponse.minutely[apiResponse.minutely.length - 1].precipitation} Millimètres` : 'Pas d\'informations.', true)
-                        .addField('Humidité :', `${apiResponse.current.humidity} %`, true)
-                        .addField(`Index UV :`, `${apiResponse.current.uvi}`, true)
-                        .addField(`Visibilité :`, `${apiResponse.current.visibility}`, true)
-                        .addField(apiResponse.alerts ? "Alerte(s) dans la zone :" : "Aucune alerte(s) n'est à signaler.", apiResponse.alerts ? `Il y a une/des alerte(s) pour \`${apiResponse.alerts.map(o => o.event).join(', ')}\` dans votre zone !\nCliquez sur : 'Plus de détails' pour voir les détails.` : "Pas d'alerte(s) récente(s).")
+                        .addFields({ name: 'Température : ', value: `${apiResponse.current.temp}℃`, inline: true }, { name: 'Ressenti :', value: `${apiResponse.current.feels_like}℃`, inline: true }, { name: 'Vitesse du vent :', value: `${apiResponse.current.wind_speed} km/h`, inline: true }, { name: 'Direction du vent :', value: `${apiResponse.current.wind_deg}°`, inline: true }, { name: 'Pression :', value: `${apiResponse.current.pressure} MilliBar`, inline: true }, { name: 'Pluie :', value: rain ? `${rain} Millimètres` : apiResponse.minutely ? `${apiResponse.minutely[apiResponse.minutely.length - 1].precipitation} Millimètres` : 'Pas d\'informations.', inline: true }, { name: 'Humidité :', value: `${apiResponse.current.humidity} %`, inline: true }, { name: `Index UV :`, value: `${apiResponse.current.uvi}`, inline: true }, { name: `Visibilité :`, value: `${apiResponse.current.visibility}`, inline: true }, { name: apiResponse.alerts ? "Alerte(s) dans la zone :" : "Aucune alerte(s) n'est à signaler.", value: apiResponse.alerts ? `Il y a une/des alerte(s) pour \`${apiResponse.alerts.map(o => o.event).join(', ')}\` dans votre zone !\nCliquez sur : 'Plus de détails' pour voir les détails.` : "Pas d'alerte(s) récente(s)." })
                         .setTimestamp()
-                        .setFooter('Made by Lack', 'https://i.imgur.com/JLhTSlQ.png');
+                        .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png' });
                     interaction.reply({
                         content: 'Voici la météo :',
-                        ephemeral: true
+                        ephemeral: false
                     });
                     let channel = interaction.channel
                     channel.send({
@@ -96,7 +87,7 @@ module.exports = {
                                                     .setColor('#00FF77')
                                                     .setTitle(`Voici les information de l'alerte #${starting+1} :`)
                                                     .setDescription(`\`\`\`\n- Émetteur : ${apiResponse.alerts[starting].sender_name}\n- Début de l'alerte : ${formatDate(apiResponse.alerts[starting].start)} - ${formatTime(apiResponse.alerts[starting].start)}\n- Fin de l'alerte : ${formatDate(apiResponse.alerts[starting].end)} - ${formatTime(apiResponse.alerts[starting].start)}\n- Description: ${apiResponse.alerts[starting].description}\n\`\`\``)
-                                                    .setFooter(`Page : ${starting+1}/${rows.length}`)
+                                                    .setFooter({ text: `Page : ${starting+1}/${rows.length}` })
                                                 return embed
                                             } // ['⏪', '⬅️', '➡️', '⏩', '🗑️']
                                         await btn.update({

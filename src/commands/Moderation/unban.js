@@ -20,7 +20,7 @@ module.exports = {
     category: "Moderation",
 
     async execute(interaction) {
-        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, async (err, rows) => {
+        conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, async(err, rows) => {
             if (err) throw err;
             let user_id = interaction.options.getString("user_id");
 
@@ -49,8 +49,7 @@ module.exports = {
             let unbanEmbed = new MessageEmbed()
                 .setColor("#bc0000")
                 .setDescription(`${BannedUser.username} a été unban du serveur ${interaction.guild.name}`)
-                .addField("Unban par :", `${interaction.user.username}`)
-                .addField("Date du unban :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
+                .addFields({ name: "Unban par :", value: `${interaction.user.username}` }, { name: "Date du unban :", value: `<t:${Math.round(new Date().getTime()/1000)}:F>` })
                 .setFooter({ text: `Unban Logger`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 }) })
                 .setTimestamp();
 
@@ -66,6 +65,7 @@ module.exports = {
 
             try {
                 interaction.guild.members.unban(BannedUser, { reason: "Unban" });
+                interaction.reply({ content: "L'utilisateur a été débanni !", ephemeral: true })
             } catch (error) {
                 interaction.client.errorSend(error);
                 return interaction.reply(`Une erreur est survenue, le staff a été prévenu ! :(`);

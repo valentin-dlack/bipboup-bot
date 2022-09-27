@@ -78,10 +78,12 @@ module.exports = {
                         .setAuthor({ name: 'Vérification de compte', iconURL: client.user.displayAvatarURL({ format: 'png', dynamic: true }) })
                         .setColor('#cc0000')
                         .setTitle('Message de vérification')
-                        .addField(`Bonjour ${member.user.username} !`,
-                            `**Pour accéder à l'entièreté du serveur de ${member.guild.name} il faut :**
+                        .addFields({
+                            name: `Bonjour ${member.user.username} !`,
+                            value: `**Pour accéder à l'entièreté du serveur de ${member.guild.name} il faut :**
                         Valider que vous n'êtes pas un bot en cliquant sur ✅ (vous avez 30 secondes)
-                        \u200b`)
+                        \u200b`
+                        })
                         .setTimestamp()
                         .setFooter({ text: 'Join Verification', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 
@@ -145,6 +147,28 @@ module.exports = {
                         log_channel.send(`Impossible de trouver le salon de comptage des membres.`);
                     }
                     memberCountChannel.setName(`Membres : ${memberCount}`);
+                }
+                let log_channel = member.guild.channels.cache.find(ch => ch.id === rows[0].log_channel);
+                if (!log_channel) {
+                    return;
+                } else {
+                    let userAvatar = member.user.avatarURL({ format: 'png', dynamic: true, size: 256 });
+                    let memberEmbed = new MessageEmbed()
+                        .setColor('GREEN')
+                        .setTitle('   -❯    MemberLogs    ❰-   ')
+                        .setDescription(`❯❯ Nouveau membre sur le serveur :`)
+                        .addFields({
+                            name: 'Informations :',
+                            value: `**• Pseudo :** ${member.user.tag}
+                            **• ID :** ${member.user.id}
+                            **• Date de création :** <t:${Math.round(member.user.createdTimestamp/1000)}:F>
+                            **• A Rejoint le :** <t:${Math.round(member.joinedTimestamp/1000)}:F>`
+                        })
+                        .setImage(userAvatar)
+                        .setTimestamp()
+                        .setFooter({ text: `Made by Lack`, iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
+
+                    log_channel.send({ embeds: [memberEmbed] })
                 }
             }
         });

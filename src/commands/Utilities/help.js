@@ -22,30 +22,30 @@ module.exports = {
 
                 let embed = new MessageEmbed()
                     .setColor('GREEN')
-                    .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'})
-                    .setAuthor({ name: `Commande :  ${commandData.data.name}`, iconURL : interaction.guild.iconURL({ dynamic: true })})
+                    .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
+                    .setAuthor({ name: `Commande :  ${commandData.data.name}`, iconURL: interaction.guild.iconURL({ dynamic: true }) })
                     .setDescription(
-                `**• Description : ${commandData.data.description}**\n
+                        `**• Description : ${commandData.data.description}**\n
                 **• Catégorie : ${commandData.category}**\n
                 **• Options : **`
-            );
+                    );
 
                 if (commandData.data.options) {
                     for (let i = 0; i < commandData.data.options.length; i++) {
                         let option = commandData.data.options[i];
-                        embed.addField(`${interaction.client.capitalize(option.name)}`, `${option.description}`, true);
+                        embed.addFields({ name: `${interaction.client.capitalize(option.name)}`, value: `${option.description}`, inline: true });
                     }
                 }
 
-                interaction.reply({embeds: [embed]});
+                interaction.reply({ embeds: [embed] });
             } else {
                 const embed = new MessageEmbed()
-                .setColor('GREEN')
-                .setAuthor({ name: `Menu D'Aide de ${interaction.guild.name}`, iconURL : interaction.guild.iconURL({ dynamic: true })})
-                .setDescription(`Nombre de commandes : ${interaction.client.commands.size}`)
-                .setThumbnail(interaction.client.user.displayAvatarURL())
-                .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png'})
-                .setThumbnail();
+                    .setColor('GREEN')
+                    .setAuthor({ name: `Menu D'Aide de ${interaction.guild.name}`, iconURL: interaction.guild.iconURL({ dynamic: true }) })
+                    .setDescription(`Nombre de commandes : ${interaction.client.commands.size}`)
+                    .setThumbnail(interaction.client.user.displayAvatarURL())
+                    .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
+                    .setThumbnail();
 
                 if (interaction.user.id !== ownerID) {
                     categories = interaction.client.removeDuplicates(interaction.client.commands.filter(c => c.category !== 'Owner').map(c => c.category));
@@ -54,10 +54,10 @@ module.exports = {
                 }
 
                 for (const category of categories) {
-                    embed.addField(`**${category}**`, interaction.client.commands.filter(cmd => cmd.category === category).map(cmd => `\`${cmd.data.name}\``).join(' '))
+                    embed.addFields({ name: `**${category}**`, value: interaction.client.commands.filter(cmd => cmd.category === category).map(cmd => `\`${cmd.data.name}\``).join(' ') })
                 }
 
-                interaction.user.send({embeds: [embed]});
+                interaction.user.send({ embeds: [embed] });
                 interaction.user.send("**Pour toute informations sur le bot et sur comment contacter les développeurs, faites la commande** `/infos`\nPour plus d'informations sur une certaine commande, faites \`/help [commande]\` !")
                 interaction.reply({ content: "📬 Vous avez reçu un message privé avec la liste des commandes disponibles.", ephemeral: true });
             }

@@ -84,17 +84,13 @@ module.exports = {
 
                 let log_channel = interaction.guild.channels.cache.get(rows[0].log_channel);
                 let mod_role = interaction.guild.roles.cache.get(rows[0].mod_role);
+                let welcome_channel = interaction.guild.channels.cache.get(rows[0].welcomeChannel);
+                let verified_role = interaction.guild.roles.cache.get(rows[0].verifiedRole);
 
                 let embed = new MessageEmbed()
                     .setColor('#0099ff')
                     .setTitle('Configuration actuelle')
-                    .addField('Salon des logs', log_channel ? `<#${log_channel.id}>` : 'Aucun salon de logs')
-                    .addField('Role de modération', mod_role ? `<@&${mod_role.id}>` : 'Aucun role de modération')
-                    .addField('Message de bienvenue', rows[0].welcomeMsg != "0" ? 'Activé' : 'Désactivé')
-                    .addField('Vérification d\'arrivée', rows[0].joinVerification != "0" ? 'Activé' : 'Désactivé')
-                    .addField('Compteur de membres', rows[0].memberCount != "0" ? 'Activé' : 'Désactivé')
-                    .addField('Logs lors de la suppression d\'un message', rows[0].logDel != "0" ? 'Activé' : 'Désactivé')
-                    .addField('Logs lors de la modification d\'un message', rows[0].logEdit != "0" ? 'Activé' : 'Désactivé')
+                    .addFields({ name: 'Salon des logs', value: log_channel ? `<#${log_channel.id}>` : 'Aucun salon de logs', inline: true }, { name: 'Role de modération', value: mod_role ? `<@&${mod_role.id}>` : 'Aucun role de modération', inline: true }, { name: 'Message de bienvenue', value: rows[0].welcomeMsg != "0" ? 'Activé' : 'Désactivé', inline: false }, { name: 'Salon de bienvenu', value: welcome_channel ? `<#${welcome_channel.id}>` : 'Aucun salon de bienvenu', inline: false }, { name: 'Vérification d\'arrivée', value: rows[0].joinVerification != "0" ? 'Activé' : 'Désactivé', inline: true }, { name: "Role vérifié", value: verified_role ? `<@&${verified_role.id}>` : 'Aucun role vérifié', inline: true }, { name: 'Compteur de membres', value: rows[0].memberCount != "0" ? 'Activé' : 'Désactivé' }, { name: 'Logs lors de la suppression d\'un message', value: rows[0].logDel != "0" ? 'Activé' : 'Désactivé' }, { name: 'Logs lors de la modification d\'un message', value: rows[0].logEdit != "0" ? 'Activé' : 'Désactivé' })
 
                 interaction.reply({ embeds: [embed] });
             });
@@ -147,7 +143,7 @@ module.exports = {
             //update member count
             if (memberCount == true) {
                 // check if the member count channel is not already set
-                conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, async (err, rows) => {
+                conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${interaction.guild.id}`, async(err, rows) => {
                     if (err) throw err;
                     if (rows[0].memberCountChannel != "0") {
                         interaction.reply('Le compteur de membres est déjà activé');
@@ -156,12 +152,10 @@ module.exports = {
                     //create a new voice channel for the member count where you can't connect to it
                     let memberCountChannel = await interaction.guild.channels.create(`Membres : ${interaction.guild.memberCount}`, {
                         type: 'GUILD_VOICE',
-                        permissionOverwrites: [
-                            {
-                                id: interaction.guild.id,
-                                deny: ['CONNECT']
-                            }
-                        ]
+                        permissionOverwrites: [{
+                            id: interaction.guild.id,
+                            deny: ['CONNECT']
+                        }]
                     });
                     //update member count channel
                     conn.query(`UPDATE OPTIONS SET memberCount = ${memberCount}, memberCountChannel = ${memberCountChannel.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {

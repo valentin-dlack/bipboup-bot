@@ -32,9 +32,7 @@ module.exports = {
                     let logEmbed = new MessageEmbed()
                         .setColor('#ff0000')
                         .setTitle('Message Logs :')
-                        .addField(`Informations :`, `▶ Messages supprimés dans : <#${messages.first().channel.id}>`)
-                        .addField(`Nombre de messages supprimés:`, `\`${message_count}\``)
-                        .addField(`Timestamp :`, `<t:${Math.floor(Date.now()/1000)}>`)
+                        .addFields({ name: `Informations :`, value: `▶ Messages supprimés dans : <#${messages.first().channel.id}>` }, { name: `Nombre de messages supprimés:`, value: `\`${message_count}\`` }, { name: `Timestamp :`, value: `<t:${Math.floor(Date.now()/1000)}>` })
                         .setFooter({ text: `Bulk Delete`, iconUrl: client.user.displayAvatarURL({ format: 'png' }) });
 
                     logChannel.send({ embeds: [logEmbed] });

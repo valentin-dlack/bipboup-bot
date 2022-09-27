@@ -41,20 +41,13 @@ module.exports = {
                 let dmBanEmbed = new MessageEmbed()
                     .setColor("#bc0000")
                     .setDescription(`Vous avez été banni du serveur ${interaction.guild.name}`)
-                    .addField("Banni par :", `${interaction.user.username}`)
-                    .addField("Raison :", `${reason}`)
-                    .addField("Date du ban :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
+                    .addFields({ name: "Banni par :", value: `${interaction.user.username}` }, { name: "Raison :", value: `${reason}` }, { name: "Date du ban :", value: `<t:${Math.round(new Date().getTime()/1000)}:F>` })
                     .setFooter({ text: `ID du ban : #${banId}`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 }) })
 
                 let banEmbed = new MessageEmbed()
                     .setColor("#bc0000")
                     .setDescription(`Ban logs manager`)
-                    .addField("Utilisateur banni :", `${user.username}, ID : \`${user.id}\``)
-                    .addField("Banni par :", `${interaction.user.username}, ID : \`${interaction.user.id}\``)
-                    .addField("Banni dans le channel :", `${interaction.channel.name}, ID : \`${interaction.channel.id}\``)
-                    .addField("Raison :", `${reason}`)
-                    .addField("Date du ban :", `<t:${Math.round(new Date().getTime()/1000)}:F>`)
-                    .addField("ID du ban :", `#${banId}`)
+                    .addFields({ name: "Utilisateur banni :", value: `${user.username}, ID : \`${user.id}\`` }, { name: "Banni par :", value: `${interaction.user.username}, ID : \`${interaction.user.id}\`` }, { name: "Banni dans le channel :", value: `${interaction.channel.name}, ID : \`${interaction.channel.id}\`` }, { name: "Raison :", value: `${reason}` }, { name: "Date du ban :", value: `<t:${Math.round(new Date().getTime()/1000)}:F>` }, { name: "ID du ban :", value: `#${banId}` })
                     .setFooter({ text: `Ban manager`, iconURL: interaction.guild.iconURL({ format: 'png', dynamic: true, size: 256 }) })
 
                 if (logsChannel === "0" || logsChannel === "" || logsChannel === null) {

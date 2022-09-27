@@ -245,37 +245,43 @@ module.exports = {
                 interaction.reply({ embeds: [serverInfoEmbed] });
             } else if (interaction.options.getSubcommand() === "client") {
                 const core = os.cpus()[0];
-                const clientInfoEmbed = new MessageEmbed()
-                    .setThumbnail(interaction.client.user.avatarURL({ format: 'png', dynamic: true, size: 256 }))
-                    .setColor(interaction.guild.me.displayHexColor || 'BLUE')
-                    .addFields({
-                        name: 'Informations du client :',
-                        value: `**• Client :** ${interaction.client.user.tag} (${interaction.client.user.id})
-                                **• Commandes :** ${interaction.client.commands.size}
-                                **• Serveurs :** ${interaction.client.guilds.cache.size.toLocaleString()}
+                let client = interaction.client;
+                try {
+                    const clientInfoEmbed = new MessageEmbed()
+                        .setThumbnail(interaction.client.user.avatarURL({ format: 'png', dynamic: true, size: 256 }))
+                        .setColor(interaction.guild.me.displayHexColor || 'BLUE')
+                        .addFields({
+                            name: 'Informations du client :',
+                            value: `**• Client :** ${client.user.tag} (${client.user.id})
+                                **• Commandes :** ${client.commands.size}
+                                **• Serveurs :** ${client.guilds.cache.size.toLocaleString()}
                                 **• Utilisateurs :** ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)}
-                                **• Channels :** ${interaction.client.channels.cache.size.toLocaleString()}
-                                **• Date de création :** <t:${Math.round(interaction.client.user.createdTimestamp/1000)}:F>
+                                **• Channels :** ${client.channels.cache.size.toLocaleString()}
+                                **• Date de création :** <t:${Math.round(client.user.createdTimestamp/1000)}:F>
                                 **• NodeJS :** ${process.version}
                                 **• Version : ** v${version}
                                 **• discord.js :** ${djsversion}
                                 **• Développeur :** Lack_off1
                                 \u200b`
-                    }, {
-                        name: 'Informations système :',
-                        value: `**• Platforme :** ${process.platform}
+                        }, {
+                            name: 'Informations système :',
+                            value: `**• Platforme :** ${process.platform}
                             **• Uptime :** ${ms(os.uptime() * 1000, { long: true })}
                             **• CPU :**
                             \u3000 Coeurs : ${os.cpus().length}
                             \u3000 Modèle : ${core.model}
                             \u3000 Vitesse : ${core.speed}MHz
                             **• Mémoire :**
-                            \u3000 Total : ${interaction.client.formatBytes(process.memoryUsage().heapTotal)}
-                            \u3000 Used : ${interaction.client.formatBytes(process.memoryUsage().heapUsed)}`
-                    })
-                    .setTimestamp()
-                    .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png' });
-                interaction.reply({ embeds: [clientInfoEmbed] });
+                            \u3000 Total : ${client.formatBytes(process.memoryUsage().heapTotal)}
+                            \u3000 Used : ${client.formatBytes(process.memoryUsage().heapUsed)}`
+                        })
+                        .setTimestamp()
+                        .setFooter({ text: 'Made by Lack', iconURL: 'https://i.imgur.com/JLhTSlQ.png' });
+                    interaction.reply({ embeds: [clientInfoEmbed] });
+                } catch (error) {
+                    interaction.client.errorSend(interaction, error);
+                    return interaction.reply(`Une erreur est survenue, le staff a été prévenu ! :(`);
+                }
             } else if (interaction.options.getSubcommand() === "role") {
                 const role = interaction.options.getRole('target');
 

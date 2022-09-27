@@ -9,10 +9,7 @@ module.exports = (client) => {
             .setColor('#ff0000')
             .setTitle('Erreur critique')
             .setDescription(`Une erreur est survenue sur le serveur ${interaction.guild.name} !`)
-            .addField('Erreur :', `\`\`\`${error}\`\`\``)
-            .addField('Error Stack :', `\`\`\`${error.stack.substring(0, 900)}...\`\`\``)
-            .addField('Commande :', `\`\`\`${interaction.commandName}\`\`\``)
-            .addField('Utilisateur :', `\`\`\`${interaction.user.tag}\`\`\``)
+            .addFields({ name: 'Erreur :', value: `\`\`\`${error}\`\`\`` }, { name: 'Error Stack :', value: `\`\`\`${error.stack.substring(0, 900)}...\`\`\`` }, { name: 'Commande :', value: `\`\`\`${interaction.commandName}\`\`\`` }, { name: 'Utilisateur :', value: `\`\`\`${interaction.user.tag}\`\`\`` })
             .setTimestamp();
         client.channels.cache.get(channel_id).send({ embeds: [embed] });
     }

@@ -60,15 +60,15 @@ module.exports = {
             .setTitle('   -❯    Bonjour !    ❰-   ')
             .setThumbnail(guild.me.user.avatarURL({ format: 'jpg', dynamic: true, size: 256 }))
             .setDescription(`Après un peu de voyage, je suis bien arrivé chez vous ${guild.name} ! Heureux de vous rencontrer.`)
-            .addField('Quelques informations sur moi :',
-                `**❯❯ Nom : ${guild.me.user.username}**
+            .addFields({
+                name: 'Quelques informations sur moi :',
+                value: `**❯❯ Nom : ${guild.me.user.username}**
                 **❯❯ ID : ${guild.me.user.id}**
                 **❯❯ Nombre de commandes : ${client.commands.size}**
-                **❯❯ Nombre de serveurs : ${client.guilds.size}**
+                **❯❯ Nombre de serveurs : ${client.guilds.cache.size}**
                 **❯❯ Commande d'aide : \`/help\`**
                 \u200b`
-            )
-            .addField(`Comment me configurer ?`, `❯❯ Pour ça, il faut faire la commande \`/setup\` et renseigner les informations nécessaires (seulement pour les admins).`)
+            }, { name: `Comment me configurer ?`, value: `❯❯ Pour ça, il faut faire la commande \`/setup\` et renseigner les informations nécessaires (seulement pour les admins).` })
             .setTimestamp()
             .setFooter({ text: 'Made by Lack, Thanks for adding :D', iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 
@@ -79,8 +79,9 @@ module.exports = {
             .setColor('YELLOW')
             .setTitle('   -❯    GuildDevLogs    ❰-   ')
             .setDescription(`❯❯ Added the bot on a new guild :`)
-            .addField('Informations :',
-                `Guild name : \`${guild.name}\`
+            .addFields({
+                name: 'Informations :',
+                value: `Guild name : \`${guild.name}\`
                 Guild ID : \`${guild.id}\`
                 Guild Owner : ${owner.user.username + owner.user.discriminator}
                 Client Joined at : \`${guild.joinedAt.toDateString()}, ${guild.joinedAt.toLocaleTimeString('fr-FR')}\`
@@ -90,7 +91,7 @@ module.exports = {
                 Text Channels : \`${channels.filter(channel => channel.type === 'GUILD_TEXT').size}\`
                 Vocal Channels : \`${channels.filter(channel => channel.type === 'GUILD_VOICE').size}\`
                 \u200b`
-            )
+            })
             .setTimestamp()
             .setFooter({ text: `Made by Lack`, iconURL: 'https://i.imgur.com/JLhTSlQ.png' })
 

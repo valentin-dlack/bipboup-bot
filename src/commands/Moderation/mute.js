@@ -37,17 +37,23 @@ module.exports = {
                 }
 
                 let logsChannel = rows[0].log_channel
+                logsChannel = interaction.guild.channels.cache.find(channel => channel.id === logsChannel)
 
                 let muteEmbed = new MessageEmbed()
                     .setColor("#bc0000")
                     .setDescription(`${targetMember.user.username} a été mute du serveur ${interaction.guild.name}`)
-                    .addField("Mute par :", `${interaction.user.username}`)
-                    .addField("Raison :", `${reason}`)
-                    .addField("Durée du mute :", `${time} minutes`)
+                    .addFields({ name: "Mute par :", value: `${interaction.user.username}` }, { name: "Raison :", value: `${reason}` }, { name: "Durée du mute :", value: `${time} minutes` })
                     .setTimestamp();
 
                 if (logsChannel === "0" || logsChannel === "" || logsChannel === null) {
-                    interaction.reply({ content: "Aucun channel de logs n'a été trouvé ! Le ban sera log dans vos messages privé", ephemeral: true });
+                    interaction.reply({ content: "Aucun channel de logs n'a été trouvé ! Le log sera log dans vos messages privé", ephemeral: true });
+                }
+
+                if (logsChannel !== "none") {
+                    logsChannel.send({ embeds: [muteEmbed] });
+                } else {
+                    interaction.user.send({ embeds: [muteEmbed] });
+                    return;
                 }
 
                 targetMember.timeout(time * 60 * 1000, `${reason}`);

@@ -37,11 +37,7 @@ module.exports = {
                     let logEmbed = new MessageEmbed()
                         .setColor('ORANGE')
                         .setTitle('Message Logs :')
-                        .addField(`Informations :`, `\`\`\`diff\n▶ Message modifié dans : ${oldMessage.channel.name}\n▶ Ecrit par : ${oldMessage.author.tag}\n\`\`\``)
-                        .addField(`Timestamp :`, `<t:${Math.floor(Date.now()/1000)}>`)
-                        .addField(`Contenu de l'ancien message :`, `\`\`\`${oldMessage.cleanContent ? oldMessage.cleanContent : "[Empty message]"}\`\`\``)
-                        .addField(`Contenu du nouveau message :`, `\`\`\`${newMessage.cleanContent ? newMessage.cleanContent : "[Empty message]"}\`\`\``)
-                        .addField(`Attachements de l'ancien message :`, `${attachment ? attachment.join('\n') : "No Attachements"}`)
+                        .addFields({ name: `Informations :`, value: `\`\`\`diff\n▶ Message modifié dans : ${oldMessage.channel.name}\n▶ Ecrit par : ${oldMessage.author.tag}\n\`\`\`` }, { name: `Timestamp :`, value: `<t:${Math.floor(Date.now()/1000)}>` }, { name: `Contenu de l'ancien message :`, value: `\`\`\`${oldMessage.cleanContent ? oldMessage.cleanContent : "[Empty message]"}\`\`\`` }, { name: `Contenu du nouveau message :`, value: `\`\`\`${newMessage.cleanContent ? newMessage.cleanContent : "[Empty message]"}\`\`\`` }, { name: `Attachements de l'ancien message :`, value: `${attachment ? attachment.join('\n') : "No Attachements"}` })
                         .setFooter({ text: `ID du message : ${newMessage.id}`, iconURL: oldMessage.author.displayAvatarURL({ format: 'png' }) });
 
                     logChannel.send({ embeds: [logEmbed] });
