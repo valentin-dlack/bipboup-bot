@@ -1,4 +1,4 @@
 /node_modules
 cfg.json
 user_db.db
-src\commands\trash
+src/commands/trash
