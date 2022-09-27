@@ -68,7 +68,6 @@ module.exports = {
                     }
                     console.log(`[MySQL] -> New entry in WARNS : [${interaction.guild.id}, ${user.id}, ${uid}]`)
                 });
-                //ALTER TABLE `warns` ADD `uid` VARCHAR(255) NOT NULL ; 
                 conn.query(`SELECT * FROM WARNS WHERE uid = '${uid}'`, (err, rows) => {
                     if (err) {
                         interaction.client.errorSend(interaction, err);

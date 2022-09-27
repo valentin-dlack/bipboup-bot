@@ -16,6 +16,7 @@ module.exports = {
     once: false,
 
     async execute(message, client) {
+        if (message.author.bot == true) return;
         conn.query(`SELECT * FROM OPTIONS WHERE guild_id = ${message.guild.id}`, (err, rows) => {
             if (err) throw err;
             if (rows.length > 0) {
