@@ -260,6 +260,16 @@ module.exports = (client) => {
         });
     }
 
+    client.setExp = (guildId, userId, xp) => {
+        return new Promise(async (resolve, reject) => {
+            let level = await client.getLevelFromExp(xp);
+            conn.query(`UPDATE XP SET xp = ${xp}, level = ${level} WHERE user_id = '${userId}' AND guild_id = '${guildId}'`, (err) => {
+                if (err) reject(err);
+                else resolve();
+            });
+        });
+    }
+
     client.getLevelFromExp = (exp) => {
         let level = 1;
         while (exp >= levels.levels[level].xp) {

@@ -68,7 +68,7 @@ module.exports = {
         setInterval(() => {
             let activities_list = [
                     `/help || ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)} users`,
-                    `V 3.0.0 || On ${client.guilds.cache.size} servers`,
+                    `V 3.1.1 || On ${client.guilds.cache.size} servers`,
                     `/help || ${client.channels.cache.size} channels`,
                 ] // creates an arraylist containing phrases you want your bot to switch through.
             client.user.setActivity(`${activities_list[i++ % activities_list.length]}`, { type: "WATCHING" }); // sets bot's activities to one of the phrases in the arraylist.
