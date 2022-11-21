@@ -36,6 +36,10 @@ module.exports = {
             if (err) throw err;
             console.log(`> Created table WARNS`);
         });
+        conn.query(`CREATE TABLE IF NOT EXISTS XP (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, user_id VARCHAR(30) NOT NULL, guild_id VARCHAR(30) NOT NULL, xp INT NOT NULL, level INT NOT NULL)`, (err, rows) => {
+            if (err) throw err;
+            console.log(`> Created table XP`);
+        });
 
         console.log(`> Created tables for guild ${guild.name} (${guild.id})`);
         console.log(`> Filling Option table for guild ${guild.name} (${guild.id})`);

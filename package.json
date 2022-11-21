@@ -25,6 +25,7 @@
         "node-superfetch": "^0.2.3",
         "os": "^0.1.2",
         "path": "^0.12.7",
+        "string-progressbar": "^1.0.4",
         "turl": "^1.1.2",
         "util": "^0.12.4",
         "uuid": "^9.0.0"

@@ -2,3 +2,4 @@
 cfg.json
 user_db.db
 src/commands/trash
+src/functions/levels.json
