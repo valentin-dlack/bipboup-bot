@@ -67,7 +67,7 @@ module.exports = {
         let i = 0;
         setInterval(() => {
             let activities_list = [
-                    `/help || ${client.guilds.cache.reduce((a, g) => a + g.memberCount, 0)} users`,
+                    `/help || ${client.guilds.cache.reduce((a, b) => a + b.memberCount, 0)} users`,
                     `V 3.1.1 || On ${client.guilds.cache.size} servers`,
                     `/help || ${client.channels.cache.size} channels`,
                 ] // creates an arraylist containing phrases you want your bot to switch through.
