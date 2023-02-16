@@ -73,6 +73,12 @@ module.exports = {
             .setName('welcome-channel')
             .setDescription('Changer le salon ou sera envoyé le message de bienvenue')
             .addChannelOption(option => option.setName('welcome-channel').setDescription('Le salon ou sera envoyé le message de bienvenue').setRequired(true))
+        )
+        .addSubcommand(subcommand =>
+            subcommand
+            .setName('exp')
+            .setDescription('Activer ou désactiver le système d\'expérience')
+            .addBooleanOption(option => option.setName('exp').setDescription('Activer ou désactiver le système d\'expérience').setRequired(true))
         ),
     permissions: ["ADMINISTRATOR"],
     category: 'Utilitaires',
@@ -202,6 +208,17 @@ module.exports = {
             conn.query(`UPDATE OPTIONS SET welcome_channel = ${welcomeChannel.id} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
                 if (err) throw err;
                 interaction.reply('Le salon de bienvenue a été mis à jour');
+            });
+        } else if (interaction.options.getSubcommand() === "exp") {
+            let exp = interaction.options.getBoolean("exp");
+            //update exp
+            conn.query(`UPDATE OPTIONS SET exp = ${exp} WHERE guild_id = ${interaction.guild.id}`, (err, rows) => {
+                if (err) throw err;
+                if (exp == true) {
+                    interaction.reply('Le système d\'expérience a été activé');
+                } else {
+                    interaction.reply('Le système d\'expérience a été désactivé');
+                }
             });
         }
 

@@ -24,7 +24,7 @@ module.exports = {
 
     async execute(guild, client) {
         console.log(`> Joined guild ${guild.name} (${guild.id}) at ${new Date()}`);
-        conn.query(`CREATE TABLE IF NOT EXISTS OPTIONS (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, guild_id VARCHAR(30) NOT NULL, log_channel VARCHAR(30) NOT NULL, mod_role VARCHAR(30) NOT NULL, verifiedRole VARCHAR(30) NOT NULL, welcome_channel VARCHAR(30) NOT NULL, welcomeMsg BOOLEAN, joinVerification BOOLEAN, memberCount BOOLEAN, logDel BOOLEAN, logEdit BOOLEAN, memberCountChannel VARCHAR(30) NOT NULL)`, (err, rows) => {
+        conn.query(`CREATE TABLE IF NOT EXISTS OPTIONS (id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, guild_id VARCHAR(30) NOT NULL, log_channel VARCHAR(30) NOT NULL, mod_role VARCHAR(30) NOT NULL, verifiedRole VARCHAR(30) NOT NULL, welcome_channel VARCHAR(30) NOT NULL, welcomeMsg BOOLEAN, joinVerification BOOLEAN, memberCount BOOLEAN, logDel BOOLEAN, logEdit BOOLEAN, memberCountChannel VARCHAR(30) NOT NULL, xpSystem BOOLEAN)`, (err, rows) => {
             if (err) throw err;
             console.log(`> Created table OPTIONS`);
         });
@@ -48,7 +48,7 @@ module.exports = {
             if (err) throw err;
 
             if (rows.length < 1) {
-                conn.query(`INSERT INTO OPTIONS (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit, memberCountChannel) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [guild.id, '0', '0', '0', '0', false, false, false, false, false, '0'], (err, rows) => {
+                conn.query(`INSERT INTO OPTIONS (guild_id, log_channel, mod_role, verifiedRole, welcome_channel, welcomeMsg, joinVerification, memberCount, logDel, logEdit, memberCountChannel, xpSystem) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`, [guild.id, '0', '0', '0', '0', false, false, false, false, false, '0', false], (err, rows) => {
                     if (err) throw err;
                     console.log(`> Inserted guild ${guild.name} (${guild.id}) into guilds table`);
                 });
